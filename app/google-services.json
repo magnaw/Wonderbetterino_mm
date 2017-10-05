@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "405561362944",
+    "firebase_url": "https://wonderbetterino-5092a.firebaseio.com",
+    "project_id": "wonderbetterino-5092a",
+    "storage_bucket": "wonderbetterino-5092a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:405561362944:android:44a3692241e9a032",
+        "android_client_info": {
+          "package_name": "com.betterino.magnus.wonderbetterino_mm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "405561362944-toe3u9u2i5ogd7p9as7pl61m0628usef.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFyB7zIYXC805_y2mOmHZJhWF0mhbjrcI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
