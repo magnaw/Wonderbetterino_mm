@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -163,14 +164,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         final EditText emailInput = new EditText(context);
         emailInput.setHint("Insert email");
+        emailInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         layout.addView(emailInput);
 
         final EditText passwordInput = new EditText(context);
         passwordInput.setHint("Insert password");
+        passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         layout.addView(passwordInput);
 
         final EditText passwordInput2 = new EditText(context);
         passwordInput2.setHint("Insert password again");
+        passwordInput2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         layout.addView(passwordInput2);
 
         if (!email.equals(""))
