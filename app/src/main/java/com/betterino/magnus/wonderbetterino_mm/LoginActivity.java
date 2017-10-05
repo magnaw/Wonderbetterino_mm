@@ -54,6 +54,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailText = (EditText) findViewById(R.id.emailLogin);
         passwordText = (EditText) findViewById(R.id.passwordLogin);
 
+        emailText.setText("test@mail.dk");
+        passwordText.setText("123456");
+
     }
 
     public void onClick(View v) {
@@ -85,18 +88,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("", "signInWithEmail:onComplete:" + task.isSuccessful());
-
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+                        if (task.isSuccessful()) {
+                            openMainMenu();
+                        }
                         if (!task.isSuccessful()) {
                             Log.w("", "signInWithEmail", task.getException());
                             Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
                     }
                 });
     }
