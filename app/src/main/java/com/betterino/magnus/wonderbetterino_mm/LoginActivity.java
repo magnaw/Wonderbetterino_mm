@@ -20,11 +20,16 @@ import android.widget.Toast;
 import android.support.design.widget.Snackbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
@@ -37,21 +42,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth.AuthStateListener mAuthListener;
     private AlertDialog popup;
     final Context context = this;
+//    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //firebase
+
+//        this.user = SingletonApplications.user;
+        //Firebase
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+                SingletonApplications.user = firebaseAuth.getCurrentUser();
+                if (SingletonApplications.user != null) {
                     // User is signed in
-                    Log.d("", "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d("", "onAuthStateChanged:signed_in:" + SingletonApplications.user.getUid());
+
                 } else {
                     // User is signed out
                     Log.d("", "onAuthStateChanged:signed_out");
@@ -60,8 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         };
 
-
-        //layout
+        //Layout
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener((View.OnClickListener) this);
 
@@ -74,6 +82,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         emailText.setText("test@mail.dk");
         passwordText.setText("123456");
+
+
+
+
 
     }
 
@@ -109,18 +121,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         else if (v == registerButton) {
-//            openRegisterFrag();
             registerPopup("");
         }
     }
 
-    public void login(String email, String password) {
+    public void login(String email, final String password) {
+        final String email2 = email;
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d("", "signInWithEmail:onComplete:" + task.isSuccessful());
                         if (task.isSuccessful()) {
+                            setUser(email2, password);
                             openMainMenu();
                         }
                         if (!task.isSuccessful()) {
@@ -130,6 +143,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 });
+    }
+
+    public void setUser(String email, String password) {
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+//                SingletonApplications.user = authResult.getUser();
+
+                //Smider alle users ind i et array i singleton
+//                FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                DatabaseReference myRef = database.getReference();
+//
+//                myRef.child("users").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+//                        for (DataSnapshot child : children) {
+//                            UserDTO value = child.getValue(UserDTO.class);
+//                            SingletonApplications.userArray.add(value);
+//                        }
+//
+//
+//                        for (UserDTO users : SingletonApplications.userArray) {
+//                            //Den data der passer med userid
+//                            makeToast(users.getName());
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError databaseError) {
+//
+//                    }
+//                });
+
+
+            }
+        });
     }
 
     public void signUp(String email, String password) {
@@ -153,6 +205,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Intent i = new Intent(this, MainMenu.class);
         startActivity(i);
     }
+
+
 
 
     public void registerPopup(String email) {
@@ -206,7 +260,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     registerPopup(emailInput.getText().toString());
                 }
                 else {
+
+
                     signUp(emailInput.getText().toString(), passwordInput.getText().toString());
+
                 }
             }
         });
@@ -232,6 +289,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Enter a valid email", Toast.LENGTH_SHORT).show();
         else if (option.equals("passTooShort"))
             Toast.makeText(this, "Password is too short, it should be at least 6 characters long", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this, option, Toast.LENGTH_SHORT).show();
     }
 
     @Override
