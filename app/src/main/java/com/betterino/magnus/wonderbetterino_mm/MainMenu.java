@@ -64,6 +64,11 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
 
+
+//        String key = child.getKey();
+        makeToast("Din key er : ");
+
+
 //        myRef.child("users").addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {

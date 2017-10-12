@@ -70,6 +70,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         };
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        //Firebase DB
+
+
+
 
 
 
@@ -188,7 +192,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    public void signUp(String email, String password) {
+    public void signUp(final String name, String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -200,6 +204,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                         else if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Registration complete, you can now sign in", Toast.LENGTH_SHORT).show();
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if (user != null) {
+                                writeNewUser(user.getUid(), name);
+                            } else {
+                                // No user is signed in
+                            }
+
+
 
                         }
                     }
@@ -225,7 +237,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         layout.setOrientation(LinearLayout.VERTICAL);
 
         final EditText nameInput = new EditText(context);
-        nameInput.setHint("Insert email");
+        nameInput.setHint("Insert name");
         nameInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         layout.addView(nameInput);
 
@@ -279,7 +291,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 else {
 
 
-                    signUp(emailInput.getText().toString(), passwordInput.getText().toString());
+                    signUp(nameInput.getText().toString(), emailInput.getText().toString(), passwordInput.getText().toString());
 
                 }
             }
@@ -312,20 +324,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, option, Toast.LENGTH_SHORT).show();
     }
 
-    public void onAuthSuccess(FirebaseUser user) {
-        String username = usernameFromEmail(user.getEmail());
-
-        // Write new user
-        writeNewUser(user.getUid(), username);
-
-        // Go to MainActivity
-        startActivity(new Intent(LoginActivity.this, MainMenu.class));
-        finish();
-    }
+//    public void onAuthSuccess(FirebaseUser user) {
+//        // Go to MainActivity
+//        startActivity(new Intent(LoginActivity.this, MainMenu.class));
+//        finish();
+//    }
 
     public void writeNewUser(String userId, String name) {
         UserDTO user = new UserDTO(name, 0);
         mDatabase.child("users").child(userId).setValue(user);
+
     }
 
     public String usernameFromEmail(String email) {
@@ -341,7 +349,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
         if (mAuth.getCurrentUser() != null) {
-            onAuthSuccess(mAuth.getCurrentUser());
+//            onAuthSuccess(mAuth.getCurrentUser());
+            //There is a signed in user, so we just skip the login screen
+            startActivity(new Intent(LoginActivity.this, MainMenu.class));
+            finish();
         }
     }
 
