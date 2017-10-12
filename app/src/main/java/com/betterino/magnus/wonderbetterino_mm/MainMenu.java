@@ -39,6 +39,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     private String userID;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,33 +63,34 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         //Firebase DB
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
-        myRef.child("users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                for (DataSnapshot child : children) {
-                    UserDTO value = child.getValue(UserDTO.class);
-                    SingletonApplications.userArray.add(value);
-                }
-
-
-                for (UserDTO users : SingletonApplications.userArray) {
-                    //Den data der passer med userid
-                    makeToast(users.getName());
-                }
-
-//                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-//                    SingletonApplications.userInfo.setName(ds.child(userID).getValue(UserDTO.class).getName());
-//                    SingletonApplications.userInfo.setWallet(ds.child(userID).getValue(UserDTO.class).getWallet());
+//        myRef.child("users").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+//                for (DataSnapshot child : children) {
+//                    UserDTO value = child.getValue(UserDTO.class);
+//                    SingletonApplications.userArray.add(value);
 //                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//
+//
+//                for (UserDTO users : SingletonApplications.userArray) {
+//                    //Den data der passer med userid
+//                    makeToast(users.getName());
+//                }
+//
+////                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+////                    SingletonApplications.userInfo.setName(ds.child(userID).getValue(UserDTO.class).getName());
+////                    SingletonApplications.userInfo.setWallet(ds.child(userID).getValue(UserDTO.class).getWallet());
+////                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
 
@@ -169,8 +171,13 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
             startActivity(i);
         }
         else if (v == avatarButton) {
-            Intent i = new Intent(this, Profile.class);
-            startActivity(i);
+//            Intent i = new Intent(this, Profile.class);
+//            startActivity(i);
+
+            startActivity(new Intent(MainMenu.this, LoginActivity.class));
+            finish();
+            mAuth.signOut();
+            makeToast("Signed out");
         }
     }
 
@@ -271,10 +278,11 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     public void onBackPressed() {
-        mAuth.signOut();
-        finish();
-        SingletonApplications.userArray = new ArrayList<UserDTO>();
-        makeToast("Signed out");
+        super.onBackPressed();
+//        mAuth.signOut();
+//        finish();
+//        SingletonApplications.userArray = new ArrayList<UserDTO>();
+//        makeToast("Signed out");
     }
 
 

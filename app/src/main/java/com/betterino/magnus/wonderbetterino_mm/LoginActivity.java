@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth.AuthStateListener mAuthListener;
     private AlertDialog popup;
     final Context context = this;
+    private DatabaseReference mDatabase;
 //    private FirebaseUser user;
 
     @Override
@@ -68,6 +69,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 // ...
             }
         };
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
 
         //Layout
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
@@ -121,7 +125,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         else if (v == registerButton) {
-            registerPopup("");
+            registerPopup("", "");
         }
     }
 
@@ -196,10 +200,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                         else if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Registration complete, you can now sign in", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
     }
+
+
+
 
     public void openMainMenu() {
         Intent i = new Intent(this, MainMenu.class);
@@ -209,12 +217,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
 
-    public void registerPopup(String email) {
+    public void registerPopup(String name, String email) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
         alertDialogBuilder.setTitle("Register user");
 
         LinearLayout layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText nameInput = new EditText(context);
+        nameInput.setHint("Insert email");
+        nameInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        layout.addView(nameInput);
 
         final EditText emailInput = new EditText(context);
         emailInput.setHint("Insert email");
@@ -241,23 +254,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onClick(DialogInterface dialog, int whichButton) {
                 if (!emailInput.getText().toString().contains("@")) {
                     makeToast("emailNotValid");
-                    registerPopup(emailInput.getText().toString());
+                    registerPopup(nameInput.getText().toString(), emailInput.getText().toString());
                 }
                 else if (emailInput.getText().toString().matches("")) {
                     makeToast("email");
-                    registerPopup(emailInput.getText().toString());
+                    registerPopup(nameInput.getText().toString(), emailInput.getText().toString());
                 }
                 else if (passwordInput.getText().toString().matches("") || passwordInput2.getText().toString().matches("")) {
                     makeToast("pass");
-                    registerPopup(emailInput.getText().toString());
+                    registerPopup(nameInput.getText().toString(), emailInput.getText().toString());
                 }
                 else if (passwordInput.getText().toString().length() < 6 || passwordInput2.getText().toString().length() < 6) {
                     makeToast("passTooShort");
-                    registerPopup(emailInput.getText().toString());
+                    registerPopup(nameInput.getText().toString(), emailInput.getText().toString());
                 }
                 else if (!passwordInput.getText().toString().equals(passwordInput2.getText().toString())){
                     makeToast("passNoMatch");
-                    registerPopup(emailInput.getText().toString());
+                    registerPopup(nameInput.getText().toString(), emailInput.getText().toString());
+                }
+                else if (nameInput.getText().toString().matches("")) {
+                    makeToast("noName");
+                    registerPopup(nameInput.getText().toString(), emailInput.getText().toString());
                 }
                 else {
 
@@ -289,14 +306,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Enter a valid email", Toast.LENGTH_SHORT).show();
         else if (option.equals("passTooShort"))
             Toast.makeText(this, "Password is too short, it should be at least 6 characters long", Toast.LENGTH_SHORT).show();
+        else if (option.equals("noName"))
+            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(this, option, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onAuthSuccess(FirebaseUser user) {
+        String username = usernameFromEmail(user.getEmail());
+
+        // Write new user
+        writeNewUser(user.getUid(), username);
+
+        // Go to MainActivity
+        startActivity(new Intent(LoginActivity.this, MainMenu.class));
+        finish();
+    }
+
+    public void writeNewUser(String userId, String name) {
+        UserDTO user = new UserDTO(name, 0);
+        mDatabase.child("users").child(userId).setValue(user);
+    }
+
+    public String usernameFromEmail(String email) {
+        if (email.contains("@")) {
+            return email.split("@")[0];
+        } else {
+            return email;
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+        if (mAuth.getCurrentUser() != null) {
+            onAuthSuccess(mAuth.getCurrentUser());
+        }
     }
 
 

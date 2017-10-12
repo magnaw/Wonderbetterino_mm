@@ -27,4 +27,9 @@ public class UserDTO {
     public UserDTO() {
 
     }
+
+    public UserDTO(String name, int wallet) {
+        this.name = name;
+        this.wallet = wallet;
+    }
 }
