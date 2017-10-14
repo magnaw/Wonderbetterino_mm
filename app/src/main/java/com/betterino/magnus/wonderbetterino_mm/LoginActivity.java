@@ -210,6 +210,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             } else {
                                 // No user is signed in
                             }
+                            mAuth.signOut();
 
 
 

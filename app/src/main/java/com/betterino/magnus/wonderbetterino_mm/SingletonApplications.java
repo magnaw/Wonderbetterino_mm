@@ -14,6 +14,8 @@ public class SingletonApplications extends Application {
     public static boolean changepic = false;
     public static FirebaseUser user;
     public static ArrayList<UserDTO> userArray = new ArrayList<UserDTO>();
+    public static String name;
+    public static int wallet;
 
     @Override
     public void onCreate() {

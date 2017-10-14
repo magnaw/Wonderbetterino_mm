@@ -63,43 +63,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         //Firebase DB
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
-
-
-//        String key = child.getKey();
-        makeToast("Din key er : ");
-
-
-//        myRef.child("users").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-//                for (DataSnapshot child : children) {
-//                    UserDTO value = child.getValue(UserDTO.class);
-//                    SingletonApplications.userArray.add(value);
-//                }
-//
-//
-//                for (UserDTO users : SingletonApplications.userArray) {
-//                    //Den data der passer med userid
-//                    makeToast(users.getName());
-//                }
-//
-////                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-////                    SingletonApplications.userInfo.setName(ds.child(userID).getValue(UserDTO.class).getName());
-////                    SingletonApplications.userInfo.setWallet(ds.child(userID).getValue(UserDTO.class).getWallet());
-////                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
-
-
-
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -119,46 +82,42 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
 
 
-
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                showData(dataSnapshot);
-////                String value = dataSnapshot.getValue(String.class);
-////                Log.d("", "Value is: " + value);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                Log.w("", "Failed to read value.", error.toException());
-//            }
-//        });
+//        String key = child.getKey();
+//        makeToast("Din key er : ");
 
 
+        myRef.child("users").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String name = String.valueOf(dataSnapshot.child("name").getValue());
+                SingletonApplications.name = name;
+                String wallet = String.valueOf(dataSnapshot.child("wallet").getValue());
+                try {
+                    SingletonApplications.wallet = Integer.parseInt(wallet);
+                } catch (NumberFormatException e) {
+                    makeToast("Error loading wallet. Try again later.");
+                }
+                makeToast("You have "+SingletonApplications.wallet+" memedorrars in your wallet");
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
-//        makeToast(userID);
-
-
-
-//        makeToast("Hello "+SingletonApplications.userInfo.getName());
 
 
 
 
 
-//        DatabaseReference myRef = database.child("profiles/");
 
-//        String a = myRef.child("profiles/"+user.getUid()+"/name").getKey();
-//
-//        makeToast(a);
 
-//        myRef.child("users").child(SingletonApplications.user.getUid()).get;
-
-//        String a = SingletonApplications.user.getUid();
-//        Toast.makeText(this, user.getUid(), Toast.LENGTH_SHORT).show();
 
 
 
@@ -172,8 +131,13 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
             startActivity(i);
         }
         else if (v == createButton) {
-            Intent i = new Intent(this, CreateLobby.class);
-            startActivity(i);
+//            Intent i = new Intent(this, CreateLobby.class);
+//            startActivity(i);
+
+            //Add 1 memedorrar to wallet.
+            UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet+1);
+            myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
+
         }
         else if (v == avatarButton) {
 //            Intent i = new Intent(this, Profile.class);
@@ -190,8 +154,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        SingletonApplications.user = mAuth.getCurrentUser();
+//        SingletonApplications.user = mAuth.getCurrentUser();
         mAuth.addAuthStateListener(mAuthListener);
+        mAuth.getCurrentUser();
     }
 
     @Override
