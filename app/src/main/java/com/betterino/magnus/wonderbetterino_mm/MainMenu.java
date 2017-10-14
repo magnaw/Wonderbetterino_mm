@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.betterino.magnus.wonderbetterino_mm.Games.Galgeleg.Hangman;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,8 +23,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
@@ -127,8 +126,11 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
     public void onClick(View v) {
         if(v == joinButton){
-            Intent i = new Intent(this, JoinLobby.class);
+//            Intent i = new Intent(this, JoinLobby.class);
+//            startActivity(i);
+            Intent i = new Intent(this, Hangman.class);
             startActivity(i);
+
         }
         else if (v == createButton) {
 //            Intent i = new Intent(this, CreateLobby.class);
