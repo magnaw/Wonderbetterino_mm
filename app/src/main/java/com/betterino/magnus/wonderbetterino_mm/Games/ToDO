@@ -1,0 +1,58 @@
+//TODO
+
+//Mine planer
+
+//Lobby
+Createlobby klassens logik er basicly done. Der mangler firebase implementation, og der skal rykkes rundt på UI
+
+Lobby intent skal oprettes, forsøg med 1 intent til både host og guest, ellers lav 2
+
+JoinLobby er ikke lavet.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Krav
+
+//SKAL opfyldes:
+Der anvendes visuelle komponenter fra et antal 3. partsbiblioteker
+App’en har meningsfulde animationer og animerede overgange mellem forskellige skærmbilleder
+App'en er afprøvet - dokumentation vedlægges i bilag
+Nedbrudsrapporter for app'en skal indsamles
+Koden er versioneret. Link til versionskontrol vedlægges
+
+
+
+
+//Opfyld så mange som muligt
+Brugerfladen tilpasser sig forskellige skærmstørrelser (responsivt design)
+Backends, herunder backend as a service (BAAS) anvendes
+Løsningen har en god og vedligeholdelsesvenlig struktur
+(programlogik er adskilt fra brugergrænsefladen).
+Den endelige løsning skal stiles mod at være klar til publicering og være af en kvalitet så den er umiddelbar anvendelig, både funktionelt og visuelt (herunder gesti og animationer eller anden visuel feedback hvor det øger anvendeligheden).
+App’en skal kunne installeres på en telefon med Android 5, og fungere i et vist omfang, med mindre der er en god grund til andet.
+(det er i app/build.gradle: minSdkVersion 21 eller i AndroidManifest.xml android:minSdkVersion=21 )
+Brug  if (Build.VERSION.SDK_INT>=21) til kode som Lint brokker sig over).
+Rapporten skal (evt. i bilag) indeholde en udskrift af de forskellige skærmbilleder (sådan at man kan få et indtryk af applikationens funktioner ved udelukkende at læse rapporten)
+Evt. resterende problemer skal forklares
+
+
+
+
+
+
+
+//Tanker so far:
+
+Lobby:
+Brug timestamps som id: https://stackoverflow.com/questions/28822054/firebase-how-to-generate-a-unique-numeric-id-for-key

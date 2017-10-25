@@ -16,6 +16,7 @@ public class SingletonApplications extends Application {
     public static ArrayList<UserDTO> userArray = new ArrayList<UserDTO>();
     public static String name;
     public static int wallet;
+    public static String[] gameArray = {"Hangman", "Game 2", "Game 3"}; //De tilgængelige spil
 
     @Override
     public void onCreate() {

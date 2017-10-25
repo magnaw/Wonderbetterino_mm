@@ -37,6 +37,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     private FirebaseUser user;
     private String userID;
 
+    private Button logout;
+
 
 
     @Override
@@ -53,6 +55,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
         avatarButton = (Button) findViewById(R.id.buttonProfile);
         avatarButton.setOnClickListener((View.OnClickListener) this);
+
+
+        logout = (Button) findViewById(R.id.buttonLogout);
+        logout.setOnClickListener((View.OnClickListener) this);
 
 
         this.user = SingletonApplications.user;
@@ -97,7 +103,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 } catch (NumberFormatException e) {
                     makeToast("Error loading wallet. Try again later.");
                 }
-                makeToast("You have "+SingletonApplications.wallet+" memedorrars in your wallet");
+//                makeToast("You have "+SingletonApplications.wallet+" coins in your wallet");
 
 
             }
@@ -133,18 +139,24 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
         }
         else if (v == createButton) {
-//            Intent i = new Intent(this, CreateLobby.class);
-//            startActivity(i);
+            Intent i = new Intent(this, CreateLobby.class);
+            startActivity(i);
 
-            //Add 1 memedorrar to wallet.
-            UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet+1);
-            myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
+            //Add 1 coin to wallet.
+//            UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet+1);
+//            myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
+
+
+
 
         }
         else if (v == avatarButton) {
-//            Intent i = new Intent(this, Profile.class);
-//            startActivity(i);
+            Intent i = new Intent(this, Profile.class);
+            startActivity(i);
 
+
+        }
+        else if (v == logout) {
             startActivity(new Intent(MainMenu.this, LoginActivity.class));
             finish();
             mAuth.signOut();
