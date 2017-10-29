@@ -1,8 +1,10 @@
 package com.betterino.magnus.wonderbetterino_mm;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,23 +14,58 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+
 
 public class CreateLobby extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
-    TextView betInfoText;
-    SeekBar betValue;
-    TextView seekbarInfoText;
-    TextView gameInfoText;
-    Spinner chosenGame;
-    Button createLobby;
-    int bet;
-    String game;
+    private TextView betInfoText;
+    private SeekBar betValue;
+    private TextView seekbarInfoText;
+    private TextView gameInfoText;
+    private Spinner chosenGame;
+    private Button createLobby;
+    private int bet;
+    private String game;
+    //Firebase
+    private FirebaseUser user;
+    private String userID;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_lobby);
+
+
+        this.user = SingletonApplications.user;
+        userID = user.getUid();
+
+        //Firebase DB
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                SingletonApplications.user = firebaseAuth.getCurrentUser();
+                if (SingletonApplications.user != null) {
+                    Log.d("", "onAuthStateChanged:signed_in:" + SingletonApplications.user.getUid());
+                } else {
+                    Log.d("", "onAuthStateChanged:signed_out");
+                }
+            }
+        };
+
 
 
         betInfoText = (TextView) findViewById(R.id.createLobby_textView);
@@ -82,6 +119,7 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         if (view == createLobby) {
             makeToast("You created a lobby with the bet: "+bet+", and the game: "+game+".");
+            createLobbyOnFinished();
 
             Intent i = new Intent(this, Lobby.class);
             startActivity(i);
@@ -105,6 +143,45 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
     public void makeToast(String option) {
         Toast.makeText(this, option, Toast.LENGTH_SHORT).show();
     }
+
+    public void createLobbyOnFinished() {
+        ArrayList<LobbyDTO.players> players = new ArrayList<>();
+        LobbyDTO.players p = new LobbyDTO.players(0, userID, 0);
+        players.add(p);
+        LobbyDTO lobby = new LobbyDTO(bet, game, 0, players);
+        //Vi har nu oprettet en lobby, den skal pushes til firebase med generated ID
+        myRef.child("lobbys").child(userID).setValue(lobby);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -9,6 +9,7 @@ Lobby intent skal oprettes, forsøg med 1 intent til både host og guest, ellers
 
 JoinLobby er ikke lavet.
 
+Jeg tænker umiddelbart at bet fjernes fra ens konto når et spil startes, og så bliver der overført players*bet til vinderen.
 
 
 
