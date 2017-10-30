@@ -2,6 +2,7 @@ package com.betterino.magnus.wonderbetterino_mm;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class JoinLobbyListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final View rowView;
         rowView = inflater.inflate(R.layout.join_listview, null);
         final LobbyDTO lobbyelement = lobbyList.get(position);
@@ -73,16 +74,15 @@ public class JoinLobbyListAdapter extends BaseAdapter {
         //String lobbyID = lobbyelement.get;
         // Her skal den joine den lobby der passer til det ID vi har hentet lige henover denne linje
 
-        //rowView.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        if (SingletonApplications.changepic == false) {
-        //            Intent i = new Intent(akt, Workout_Exercises_akt.class);
-        //            i.putExtra("workout", workoutList.get(position));
-        //            akt.startActivity(i);
-        //        }
-        //    }
-        //});
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent i = new Intent(akt, JoinedLobby.class);
+                    i.putExtra("lobbyNr", lobbyList.get(position));
+                    akt.startActivity(i);
+            }
+        });
+
         return rowView;
     }
 }

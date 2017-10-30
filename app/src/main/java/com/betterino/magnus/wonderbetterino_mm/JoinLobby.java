@@ -48,19 +48,12 @@ public class JoinLobby extends AppCompatActivity {
 
         gameList = new ArrayList<LobbyDTO>();
 
-        ArrayList<LobbyDTO.players> players = new ArrayList<>();
-        LobbyDTO.players p = new LobbyDTO.players(0, "123", 0);
-        players.add(p);
-        LobbyDTO elem1 = new LobbyDTO(1, "Test", 0, players, "123");
-        gameList.add(elem1);
 
 
         myRef.child("lobbys").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                     getData(dataSnapshot);
-
-
             }
 
             @Override
@@ -68,15 +61,6 @@ public class JoinLobby extends AppCompatActivity {
 
             }
         });
-
-
-
-
-        //gameList = new ArrayList<>();
-        //LobbyElement game1 = new LobbyElement("123", "Hangman", 1);
-        //LobbyElement game2 = new LobbyElement("321", "Game", 2);
-        //gameList.add(game1);
-        //gameList.add(game2);
 
 
 
@@ -96,7 +80,7 @@ public class JoinLobby extends AppCompatActivity {
     }
 
     private void getData(DataSnapshot dataSnapshot) {
-        //gameList.clear();
+        gameList.clear();
         for(DataSnapshot ds : dataSnapshot.getChildren()) {
             LobbyDTO lob = ds.getValue(LobbyDTO.class);
             gameList.add(lob);

@@ -150,8 +150,8 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
         players.add(p);
         LobbyDTO lobby = new LobbyDTO(bet, game, 0, players, userID);
         //Vi har nu oprettet en lobby, den skal pushes til firebase med generated ID
-        String key = myRef.push().getKey();
-        myRef.child("lobbys").child(key).setValue(lobby);
+        //String key = myRef.push().getKey();
+        myRef.child("lobbys").child(userID).setValue(lobby);
 
     }
 

@@ -39,7 +39,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Games.Galgeleg.Hangman" />
-        <activity android:name=".Lobby"></activity>
+        <activity android:name=".Lobby" />
+        <activity android:name=".JoinedLobby"></activity>
     </application>
 
 </manifest>

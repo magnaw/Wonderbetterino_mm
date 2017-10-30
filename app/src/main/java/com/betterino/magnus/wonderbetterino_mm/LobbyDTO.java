@@ -1,12 +1,13 @@
 package com.betterino.magnus.wonderbetterino_mm;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Magnus on 26-10-2017.
  */
 
-public class LobbyDTO {
+public class LobbyDTO implements Serializable{
 
 
     public int bet;
@@ -46,7 +47,7 @@ public class LobbyDTO {
 
 
 
-    public static class players {
+    public static class players implements Serializable{
 
 
 
