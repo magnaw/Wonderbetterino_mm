@@ -132,10 +132,10 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
     public void onClick(View v) {
         if(v == joinButton){
-//            Intent i = new Intent(this, JoinLobby.class);
-//            startActivity(i);
-            Intent i = new Intent(this, Hangman.class);
+            Intent i = new Intent(this, JoinLobby.class);
             startActivity(i);
+            //Intent i = new Intent(this, Hangman.class);
+            //startActivity(i);
 
         }
         else if (v == createButton) {

@@ -13,6 +13,7 @@ public class LobbyDTO {
     public String game;
     public int started;
     public ArrayList<players> players;
+    public String host;
 
 
     public int getBet() { return bet; }
@@ -23,14 +24,23 @@ public class LobbyDTO {
     public void setStarted(int started) { this.started = started; }
     public ArrayList<LobbyDTO.players> getPlayers() { return players; }
     public void setPlayers(ArrayList<LobbyDTO.players> players) { this.players = players; }
+    public String getHost() { return host; }
+    public void setHost(String host) { this.host = host; }
 
 
-    public LobbyDTO(int bet, String game, int started, ArrayList<players> players) {
+    public LobbyDTO(int bet, String game, int started, ArrayList<players> players, String host) {
         this.bet = bet;
         this.game = game;
         this.started = started;
         this.players = players;
+        this.host = host;
     }
+
+    public LobbyDTO() {
+
+    }
+
+
 
 
 
@@ -59,6 +69,10 @@ public class LobbyDTO {
             this.finished = finished;
             this.id = id;
             this.score = score;
+        }
+
+        public players() {
+
         }
 
 
