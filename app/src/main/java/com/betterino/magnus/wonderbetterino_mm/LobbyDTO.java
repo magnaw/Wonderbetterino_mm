@@ -41,10 +41,16 @@ public class LobbyDTO implements Serializable{
 
     }
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "LobbyDTO{" +
+                "bet=" + bet +
+                ", game='" + game + '\'' +
+                ", started=" + started +
+                ", players=" + players +
+                ", host='" + host + '\'' +
+                '}';
+    }
 
 
     public static class players implements Serializable{

@@ -24,23 +24,49 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateLobby">
+            android:noHistory="true"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name=".JoinLobby">
+            android:noHistory="true"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name=".Profile">
+            android:noHistory="true"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity android:name=".Games.Galgeleg.Hangman">
+            android:noHistory="true"
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Lobby">
+            android:noHistory="true"
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".JoinedLobby">
+            android:noHistory="true"
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+
+        <!--
         <activity android:name=".Games.Galgeleg.Hangman" />
         <activity android:name=".Lobby" />
-        <activity android:name=".JoinedLobby"></activity>
+        <activity android:name=".JoinedLobby" />
+        <activity android:name=".GameOverActivity"></activity>
+        -->
     </application>
 
 </manifest>

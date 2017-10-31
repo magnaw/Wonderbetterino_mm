@@ -85,12 +85,16 @@ public class JoinLobby extends AppCompatActivity {
             LobbyDTO lob = ds.getValue(LobbyDTO.class);
             gameList.add(lob);
             listAdapter.notifyDataSetChanged();
+
+            //Skal sortere dem fra hvor started=1
         }
     }
 
     public void makeToast(String option) {
         Toast.makeText(this, option, Toast.LENGTH_SHORT).show();
     }
+
+
 
 
 }

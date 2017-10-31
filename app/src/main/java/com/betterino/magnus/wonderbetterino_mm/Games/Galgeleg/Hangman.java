@@ -1,5 +1,6 @@
 package com.betterino.magnus.wonderbetterino_mm.Games.Galgeleg;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.betterino.magnus.wonderbetterino_mm.LobbyDTO;
 import com.betterino.magnus.wonderbetterino_mm.R;
 
 public class Hangman extends AppCompatActivity implements View.OnClickListener {
@@ -21,6 +23,8 @@ public class Hangman extends AppCompatActivity implements View.OnClickListener {
             bv, bw, bx, by, bz, bæ, bø, bå;
 
     private int forkerteGæt;
+    private LobbyDTO lobby;
+    private String userID;
 
 
     @Override
@@ -28,11 +32,18 @@ public class Hangman extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hangman);
 
+
+        lobby = (LobbyDTO) getIntent().getSerializableExtra("lobby");
+        userID = (String) getIntent().getStringExtra("userID");
+
+
+
         galgePic = (ImageView) findViewById(R.id.galgePic1);
         ordet = (TextView) findViewById(R.id.galgeText1);
         makeButtons();
         makeHandlers();
-        hentOrdVedStart();
+        //hentOrdVedStart(); //Virker ikke eller er meget langsom.
+        vedStart();
 
 
     }
@@ -63,8 +74,26 @@ public class Hangman extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void vedSlut() {
+        Intent i = new Intent(this, GameOverActivity.class);
+        i.putExtra("lobby", lobby);
+        i.putExtra("userID", userID);
+        int a = 7-spillet.getAntalForkerteBogstaver();
+        String b = ""+a;
+        i.putExtra("score", b);
+        startActivity(i);
+
         finish();
+
+
+
+
+
     }
+
+
+
+
+
 
 
 
@@ -102,35 +131,35 @@ public class Hangman extends AppCompatActivity implements View.OnClickListener {
 
 
     public void makeHandlers(){
-        ba.setOnClickListener((View.OnClickListener) this);
-        bb.setOnClickListener((View.OnClickListener) this);
-        bc.setOnClickListener((View.OnClickListener) this);
-        bd.setOnClickListener((View.OnClickListener) this);
-        be.setOnClickListener((View.OnClickListener) this);
-        bf.setOnClickListener((View.OnClickListener) this);
-        bg.setOnClickListener((View.OnClickListener) this);
-        bh.setOnClickListener((View.OnClickListener) this);
-        bi.setOnClickListener((View.OnClickListener) this);
-        bj.setOnClickListener((View.OnClickListener) this);
-        bk.setOnClickListener((View.OnClickListener) this);
-        bl.setOnClickListener((View.OnClickListener) this);
-        bm.setOnClickListener((View.OnClickListener) this);
-        bn.setOnClickListener((View.OnClickListener) this);
-        bo.setOnClickListener((View.OnClickListener) this);
-        bp.setOnClickListener((View.OnClickListener) this);
-        bq.setOnClickListener((View.OnClickListener) this);
-        br.setOnClickListener((View.OnClickListener) this);
-        bs.setOnClickListener((View.OnClickListener) this);
-        bt.setOnClickListener((View.OnClickListener) this);
-        bu.setOnClickListener((View.OnClickListener) this);
-        bv.setOnClickListener((View.OnClickListener) this);
-        bw.setOnClickListener((View.OnClickListener) this);
-        bx.setOnClickListener((View.OnClickListener) this);
-        by.setOnClickListener((View.OnClickListener) this);
-        bz.setOnClickListener((View.OnClickListener) this);
-        bæ.setOnClickListener((View.OnClickListener) this);
-        bø.setOnClickListener((View.OnClickListener) this);
-        bå.setOnClickListener((View.OnClickListener) this);
+        ba.setOnClickListener(this);
+        bb.setOnClickListener(this);
+        bc.setOnClickListener(this);
+        bd.setOnClickListener(this);
+        be.setOnClickListener(this);
+        bf.setOnClickListener(this);
+        bg.setOnClickListener(this);
+        bh.setOnClickListener(this);
+        bi.setOnClickListener(this);
+        bj.setOnClickListener(this);
+        bk.setOnClickListener(this);
+        bl.setOnClickListener(this);
+        bm.setOnClickListener(this);
+        bn.setOnClickListener(this);
+        bo.setOnClickListener(this);
+        bp.setOnClickListener(this);
+        bq.setOnClickListener(this);
+        br.setOnClickListener(this);
+        bs.setOnClickListener(this);
+        bt.setOnClickListener(this);
+        bu.setOnClickListener(this);
+        bv.setOnClickListener(this);
+        bw.setOnClickListener(this);
+        bx.setOnClickListener(this);
+        by.setOnClickListener(this);
+        bz.setOnClickListener(this);
+        bæ.setOnClickListener(this);
+        bø.setOnClickListener(this);
+        bå.setOnClickListener(this);
     }
 
 

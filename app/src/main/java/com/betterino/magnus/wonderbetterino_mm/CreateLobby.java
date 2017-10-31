@@ -31,8 +31,10 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
     private TextView gameInfoText;
     private Spinner chosenGame;
     private Button createLobby;
-    private int bet;
+    private int bet = 5;
     private String game;
+    private LobbyDTO lobby;
+
     //Firebase
     private FirebaseUser user;
     private String userID;
@@ -77,7 +79,7 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
 
 
         betValue = (SeekBar) findViewById(R.id.createLobby_seekBar);
-        betValue.setProgress(1);
+        betValue.setProgress(bet);
         betValue.incrementProgressBy(1);
         betValue.setMax(9);
         betValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
@@ -122,7 +124,10 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
             createLobbyOnFinished();
 
             Intent i = new Intent(this, Lobby.class);
+            i.putExtra("lobby", lobby);
+            i.putExtra("userID", userID);
             startActivity(i);
+            finish();
 
         }
 
@@ -148,7 +153,7 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
         ArrayList<LobbyDTO.players> players = new ArrayList<>();
         LobbyDTO.players p = new LobbyDTO.players(0, userID, 0);
         players.add(p);
-        LobbyDTO lobby = new LobbyDTO(bet, game, 0, players, userID);
+        lobby = new LobbyDTO(bet, game, 0, players, userID);
         //Vi har nu oprettet en lobby, den skal pushes til firebase med generated ID
         //String key = myRef.push().getKey();
         myRef.child("lobbys").child(userID).setValue(lobby);

@@ -80,6 +80,7 @@ public class JoinLobbyListAdapter extends BaseAdapter {
                     Intent i = new Intent(akt, JoinedLobby.class);
                     i.putExtra("lobbyNr", lobbyList.get(position));
                     akt.startActivity(i);
+                    akt.finish();
             }
         });
 
