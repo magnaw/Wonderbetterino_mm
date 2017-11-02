@@ -41,6 +41,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,8 +89,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
 
 
-//        String key = child.getKey();
-//        makeToast("Din key er : ");
 
 
         myRef.child("users").child(userID).addValueEventListener(new ValueEventListener() {
@@ -113,6 +113,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
             }
         });
+
+
 
 
 

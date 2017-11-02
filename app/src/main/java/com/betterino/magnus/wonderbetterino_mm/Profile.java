@@ -35,6 +35,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private String userID;
 
 
+    //Listener
+    private ValueEventListener valueEvList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +85,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 //        makeToast("Din key er : ");
 
 
-        myRef.child("users").child(userID).addValueEventListener(new ValueEventListener() {
+        valueEvList = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 String name = String.valueOf(dataSnapshot.child("name").getValue());
                 SingletonApplications.name = name;
                 String wallet = String.valueOf(dataSnapshot.child("wallet").getValue());
@@ -95,16 +97,14 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     makeToast("Error loading wallet. Try again later.");
                 }
                 updateScreen();
-
-
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
+        myRef.child("users").child(userID).addValueEventListener(valueEvList);
 
 
 
@@ -133,6 +133,12 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        myRef.removeEventListener(valueEvList);
+        finish();
     }
 
     public void updateScreen() {

@@ -23,12 +23,17 @@ public class JoinLobby extends AppCompatActivity {
     private ListView list;
     private JoinLobbyListAdapter listAdapter;
     private ArrayList<LobbyDTO> gameList;
+
+    //Firebase
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseUser user;
     private String userID;
+
+    //Listener
+    private ValueEventListener valueEvList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +55,21 @@ public class JoinLobby extends AppCompatActivity {
 
 
 
-        myRef.child("lobbys").addValueEventListener(new ValueEventListener() {
+        valueEvList = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    getData(dataSnapshot);
+                getData(dataSnapshot);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
+
+
+
+        myRef.child("lobbys").addValueEventListener(valueEvList);
 
 
 
@@ -79,14 +88,19 @@ public class JoinLobby extends AppCompatActivity {
 
     }
 
+    public void removeListener(){
+        myRef.removeEventListener(valueEvList);
+    }
+
     private void getData(DataSnapshot dataSnapshot) {
         gameList.clear();
         for(DataSnapshot ds : dataSnapshot.getChildren()) {
             LobbyDTO lob = ds.getValue(LobbyDTO.class);
-            gameList.add(lob);
+            if (lob.getStarted() == 0)
+                gameList.add(lob);
             listAdapter.notifyDataSetChanged();
 
-            //Skal sortere dem fra hvor started=1
+            //Skal sortere dem fra hvor started = 1, 2 eller 3 MANGLER
         }
     }
 

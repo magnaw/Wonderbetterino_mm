@@ -23,15 +23,20 @@ public class JoinLobbyListAdapter extends BaseAdapter {
     private TextView game;
     private TextView bet;
     private String id;
+    private Context context;
 
 
 
     protected JoinLobbyListAdapter(Activity activity, ArrayList<LobbyDTO> lobbyList) {
-        Context context = activity;
+        context = activity;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.lobbyList = lobbyList;
 
         this.akt = activity;
+
+
+
+
     }
 
     @Override
@@ -77,10 +82,22 @@ public class JoinLobbyListAdapter extends BaseAdapter {
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent i = new Intent(akt, JoinedLobby.class);
-                    i.putExtra("lobbyNr", lobbyList.get(position));
-                    akt.startActivity(i);
-                    akt.finish();
+                if(context instanceof JoinLobby) {
+                    ((JoinLobby)context).removeListener();
+                }
+
+                Intent i = new Intent(akt, JoinedLobby.class);
+                i.putExtra("lobbyNr", lobbyList.get(position));
+                akt.startActivity(i);
+                akt.finish();
+
+
+
+
+
+
+
+
             }
         });
 

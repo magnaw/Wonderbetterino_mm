@@ -37,6 +37,9 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
     private FirebaseUser user;
     private String userID;
 
+    //Listeners
+    private ValueEventListener valueEvList;
+    private boolean weAreDoneHere;
 
     //Lobby info
     private String gameString;
@@ -49,6 +52,7 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby);
+        weAreDoneHere = false;
 
         //Firebase DB
         database = FirebaseDatabase.getInstance();
@@ -74,21 +78,28 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
         startGame.setOnClickListener(this);
         startGame.setText("Start game");
 
-
-        myRef.child("lobbys").child(lobby.getHost()).addValueEventListener(new ValueEventListener() {
+        valueEvList = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                lobby = dataSnapshot.getValue(LobbyDTO.class);
-                gameString = String.valueOf(dataSnapshot.child("game").getValue());
-                gameBet = String.valueOf(dataSnapshot.child("bet").getValue());
-                nrOfPlayers = lobby.players.size();
+
+                if (!weAreDoneHere && dataSnapshot.getValue() != null) {
+                    lobby = dataSnapshot.getValue(LobbyDTO.class);
+                    gameString = String.valueOf(dataSnapshot.child("game").getValue());
+                    gameBet = String.valueOf(dataSnapshot.child("bet").getValue());
+                    nrOfPlayers = lobby.players.size();
 
 
-                updateText(gameString, gameBet, nrOfPlayers);
-                if(nrOfPlayers >= 2)
-                    startGame.setEnabled(true);
-                else
-                    startGame.setEnabled(false);
+                    updateText(gameString, gameBet, nrOfPlayers);
+                    if(nrOfPlayers >= 2)
+                        startGame.setEnabled(true);
+                    else
+                        startGame.setEnabled(false);
+                }
+                else if (dataSnapshot.getValue() == null) {
+                    makeToast("Your lobby was removed.");
+                    finish();
+                }
+
 
             }
 
@@ -96,7 +107,10 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
+
+
+        myRef.child("lobbys").child(lobby.getHost()).addValueEventListener(valueEvList);
 
 
 
@@ -105,6 +119,8 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
 
     public void startGame() {
         lobby.setStarted(1);
+        weAreDoneHere = true;
+
         myRef.child("lobbys").child(lobby.getHost()).setValue(lobby);
 
 
@@ -116,6 +132,15 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
             finish();
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        weAreDoneHere = true;
+        finish();
+
+        //Slet lobby:
+        myRef.child("lobbys").child(userID).removeValue();
     }
 
 

@@ -17,6 +17,14 @@ public class LobbyDTO implements Serializable{
     public String host;
 
 
+
+    //Started so far:
+    //0 = lobby igang, kan joines
+    //1 = spil startet
+    //2 = mellemværdi, skal sættes til dette når resultater postes
+    //3 = spillet er slut
+
+
     public int getBet() { return bet; }
     public void setBet(int bet) { this.bet = bet; }
     public String getGame() { return game; }

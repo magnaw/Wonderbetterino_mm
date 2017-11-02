@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +27,7 @@ public class GameOverActivity extends AppCompatActivity {
     private LobbyDTO lobby;
     private String userID;
     private String hostID;
+    private Boolean weAreDoneHere;
 
 
     private int finished = 1;
@@ -39,11 +41,16 @@ public class GameOverActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
+    //Listeners
+    private ValueEventListener valueEvList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
+
+        weAreDoneHere = false;
 
 
 
@@ -110,55 +117,77 @@ public class GameOverActivity extends AppCompatActivity {
 
 
 
-
-        myRef.child("lobbys").child(hostID).addValueEventListener(new ValueEventListener() {
+        valueEvList = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                loadedLobby = dataSnapshot.getValue(LobbyDTO.class);
 
 
-                int i = 0;
-                int bestScore = 0;
-                LobbyDTO.players winner = new LobbyDTO.players();
-                for (LobbyDTO.players player : loadedLobby.players) {
-                    if (player.getFinished() == 1) {
-                        if (player.getScore() >= bestScore) {
-                            winner = player;
+                //      SE MIG!!!
+                //Den crasher her på en nullpointerexeption når vi sletter lobbyen.
+                //Der mangler bare booleans der fortæller den om vi skal være i den her klasse eller ej.
+                //Evt se Lobby klassen for hvordan det er gjort der. (weAreDoneHere)
+
+                //Update
+                //Nu crasher den ikke her mere, men det er kun testet for host, mangler for spillere der har joinet.
+
+                if (!weAreDoneHere && dataSnapshot.getValue() != null) {
+                    loadedLobby = dataSnapshot.getValue(LobbyDTO.class);
+
+                    int i = 0;
+                    int bestScore = 0;
+                    LobbyDTO.players winner = new LobbyDTO.players();
+                    for (LobbyDTO.players player : loadedLobby.players) {
+                        if (player.getFinished() == 1) {
+                            if (player.getScore() >= bestScore) {
+                                winner = player;
+                                bestScore = winner.score;
+                            }
+                            i++;
                         }
-                        i++;
+                    }
+                    if (i == nrOfPlayers) {
+
+                        //Hvis alle er færdige:
+                        if (winner.getId().equals(userID)) {
+                            //Overfør coins.
+                            int bet = lobby.getBet();
+                            int winnings = (bet*nrOfPlayers)/2;
+
+
+                            //Users navn er null ifølge debuggeren.
+                            //Umiddelbart køres koden uden fejl, men der bliver ikke pushet noget, måske vi lige skal køre en auth i denne klasse?
+                            UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet+winnings);
+                            myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
+                            gameFinished();
+
+                        }
+
+                    }
+
+                    if(loadedLobby.getStarted() == 3) {
+                        //Go to mainmenu and clear all previous intents (mangler)
+                        //openMainMenu();
+                        finishGameAndGoHome();
                     }
                 }
-                if (i == nrOfPlayers) {
-
-                    //Hvis alle er færdige:
-                    if (winner.getId() == userID) {
-                        //Overfør coins.
-                        UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet+(lobby.bet*nrOfPlayers));
-                        myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
-                        gameFinished();
-
-                    }
-
-                }
-
-
-
-
-
-
-                if(loadedLobby.getStarted() == 2) {
-                    //Go to mainmenu and clear all previous intents
-                    //openMainMenu();
+                else if (dataSnapshot.getValue() == null) {
                     finish();
+                    makeToast("Your lobby was removed.");
+
                 }
+
 
 
 
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
-        });
+        };
+
+        myRef.child("lobbys").child(hostID).addValueEventListener(valueEvList);
 
 
 
@@ -187,6 +216,12 @@ public class GameOverActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void finishGameAndGoHome() {
+        myRef.removeEventListener(this.valueEvList);
+        weAreDoneHere = true;
+        finish();
+    }
+
 
 
 
@@ -199,16 +234,22 @@ public class GameOverActivity extends AppCompatActivity {
         }
         LobbyDTO.players p = new LobbyDTO.players(finished, userID, score);
         players.add(p);
-        LobbyDTO updateLobby = new LobbyDTO(loadedLobby.getBet(), loadedLobby.getGame(), loadedLobby.getStarted(), loadedLobby.players, lobby.getHost());
+        LobbyDTO updateLobby = new LobbyDTO(loadedLobby.getBet(), loadedLobby.getGame(), 2, loadedLobby.players, lobby.getHost());
         myRef.child("lobbys").child(hostID).setValue(updateLobby);
         System.out.println("Lobby når vi poster: "+updateLobby);
     }
 
     public void gameFinished() {
-        LobbyDTO updateLobby = new LobbyDTO(loadedLobby.getBet(), loadedLobby.getGame(), 2, loadedLobby.players, lobby.getHost());
+        LobbyDTO updateLobby = new LobbyDTO(loadedLobby.getBet(), loadedLobby.getGame(), 3, loadedLobby.players, lobby.getHost());
         myRef.child("lobbys").child(hostID).setValue(updateLobby);
         System.out.println("Lobby når spillet er slut: "+updateLobby);
     }
+
+    public void makeToast(String option) {
+        Toast.makeText(this, option, Toast.LENGTH_SHORT).show();
+    }
+
+
 
 
 

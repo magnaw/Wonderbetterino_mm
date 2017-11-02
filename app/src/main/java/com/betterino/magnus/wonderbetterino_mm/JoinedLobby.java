@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.betterino.magnus.wonderbetterino_mm.Games.Galgeleg.Hangman;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,9 +24,15 @@ public class JoinedLobby extends AppCompatActivity {
     private TextView game;
     private TextView bet;
     private TextView info;
+    private boolean weAreDoneHere;
+
+    //Firebase
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private String hostID;
+
+    //Listeners
+    private ValueEventListener valueEvList;
+
 
     //Lobby info
     private String gameString;
@@ -38,6 +45,7 @@ public class JoinedLobby extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_joined_lobby);
+        weAreDoneHere = false;
         lobby = (LobbyDTO) getIntent().getSerializableExtra("lobbyNr");
 
         //Firebase DB
@@ -63,37 +71,44 @@ public class JoinedLobby extends AppCompatActivity {
 
 
 
-
-
-
-        myRef.child("lobbys").child(lobby.getHost()).addValueEventListener(new ValueEventListener() {
+        valueEvList = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                gameString = String.valueOf(dataSnapshot.child("game").getValue());
-                gameBet = String.valueOf(dataSnapshot.child("bet").getValue());
+
+                if (!weAreDoneHere && dataSnapshot.getValue() != null) {
+                    gameString = String.valueOf(dataSnapshot.child("game").getValue());
+                    gameBet = String.valueOf(dataSnapshot.child("bet").getValue());
 
 
+                    String isMyGameStarted = String.valueOf(dataSnapshot.child("started").getValue());
+                    int isMyGameStartedInteger = 0;
+                    try {
+                        isMyGameStartedInteger = Integer.parseInt(isMyGameStarted);
+                    } catch (NumberFormatException e) {
+                        Log.d("", "problem formating string to int");
+                    }
+                    if (isMyGameStartedInteger == 1) {
+                        //Launch game
+                        startGame();
+                    }
 
-                String isMyGameStarted = String.valueOf(dataSnapshot.child("started").getValue());
-                int isMyGameStartedInteger = 0;
-                try {
-                    isMyGameStartedInteger = Integer.parseInt(isMyGameStarted);
-                } catch (NumberFormatException e) {
-                    Log.d("", "problem formating string to int");
+                    updateText(gameString, gameBet);
                 }
-                if (isMyGameStartedInteger == 1) {
-                    //Launch game
-                    startGame();
-                }
+                else if (dataSnapshot.getValue() == null) {
+                    finish();
+                    makeToast("Your lobby was removed.");
 
-                updateText(gameString, gameBet);
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
+
+
+        myRef.child("lobbys").child(lobby.getHost()).addValueEventListener(valueEvList);
 
 
 
@@ -111,8 +126,10 @@ public class JoinedLobby extends AppCompatActivity {
     }
 
     private void startGame() {
+        weAreDoneHere = true;
         //Currently only hangman
         if (gameString.equals("Hangman")){
+            myRef.removeEventListener(valueEvList);
             Intent i = new Intent(this, Hangman.class);
             i.putExtra("lobby", lobby);
             i.putExtra("userID", userID);
@@ -128,6 +145,29 @@ public class JoinedLobby extends AppCompatActivity {
         bet.setText("Bet: "+betString);
     }
 
+    @Override
+    public void onBackPressed() {
+        weAreDoneHere = true;
+
+        //Slet lobby:
+        for (int i = 0; i<lobby.getPlayers().size(); i++) {
+            if (lobby.getPlayers().get(i).getId() == userID) {
+                myRef.child("lobbys").child(lobby.getHost()).child("players").child(""+i).getRef().removeValue();
+            }
+        }
+
+
+
+
+
+
+
+
+        finish();
+    }
+
+
+
 
     public void joinGameLobby() {
         ArrayList<LobbyDTO.players> players = lobby.getPlayers();
@@ -136,6 +176,14 @@ public class JoinedLobby extends AppCompatActivity {
         LobbyDTO addtoLobby = new LobbyDTO(lobby.getBet(), lobby.getGame(), lobby.getStarted(), players, lobby.getHost());
         myRef.child("lobbys").child(lobby.getHost()).setValue(addtoLobby);
     }
+
+    public void makeToast(String option) {
+        Toast.makeText(this, option, Toast.LENGTH_SHORT).show();
+    }
+
+
+
+
 
 
 }
