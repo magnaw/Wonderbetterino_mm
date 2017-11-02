@@ -153,6 +153,12 @@ public class GameOverActivity extends AppCompatActivity {
                             int bet = lobby.getBet();
                             int winnings = (bet*nrOfPlayers)/2;
 
+                            //MANGLER:
+                            //Pt hvis vi har 2 vindere, så vil den sidste i arrayet få gevinsten, da vi tjekker >= over det her.
+                            //Det skal gerne ændres så vi evt. kører baglæns gennem arrayet, da jeg vurdere at ved et tie, skal den hurtigste vinde,
+                            //og den hurtigste vil lille bagerst i arrayet.
+
+
 
                             //Users navn er null ifølge debuggeren.
                             //Umiddelbart køres koden uden fejl, men der bliver ikke pushet noget, måske vi lige skal køre en auth i denne klasse?
@@ -237,6 +243,10 @@ public class GameOverActivity extends AppCompatActivity {
         LobbyDTO updateLobby = new LobbyDTO(loadedLobby.getBet(), loadedLobby.getGame(), 2, loadedLobby.players, lobby.getHost());
         myRef.child("lobbys").child(hostID).setValue(updateLobby);
         System.out.println("Lobby når vi poster: "+updateLobby);
+
+
+
+
     }
 
     public void gameFinished() {

@@ -2,14 +2,17 @@
 
 //Mine planer
 
-//Lobby
-Createlobby klassens logik er basicly done. Der mangler firebase implementation, og der skal rykkes rundt på UI
 
-Lobby intent skal oprettes, forsøg med 1 intent til både host og guest, ellers lav 2
-
-JoinLobby er ikke lavet.
-
+//Mangler:
 Jeg tænker umiddelbart at bet fjernes fra ens konto når et spil startes, og så bliver der overført players*bet til vinderen.
+Der skal sorteres fra så man ikke kan se lobbyer dyrere end det antal coins man har.
+
+//Ideer
+Se om du kan ændre GameOverActivity, så den bare opdatere de aktive spillere i databasen, istedet for at tilføje flere.
+
+//Ekstra
+Implementer flere spil.
+
 
 
 

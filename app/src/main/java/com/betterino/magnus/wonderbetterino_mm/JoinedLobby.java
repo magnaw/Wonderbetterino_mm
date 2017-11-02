@@ -156,13 +156,6 @@ public class JoinedLobby extends AppCompatActivity {
             }
         }
 
-
-
-
-
-
-
-
         finish();
     }
 
