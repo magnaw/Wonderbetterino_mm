@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.betterino.magnus.wonderbetterino_mm.Games.Galgeleg.Hangman;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,6 +48,9 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        //Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        //setSupportActionBar(myToolbar);
 
 
         joinButton = (Button) findViewById(R.id.buttonJoin);
@@ -266,7 +270,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     public void onBackPressed() {
         super.onBackPressed();
 //        mAuth.signOut();
-//        finish();
+        finish();
 //        SingletonApplications.userArray = new ArrayList<UserDTO>();
 //        makeToast("Signed out");
     }

@@ -1,6 +1,28 @@
 <resources>
-    <string name="app_name">Wonderbetterino_mm</string>
+    <string name="app_name">Wonder Betterino</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Sign in -->
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="signIn">Sign in</string>
+
+
+
+    <!-- Activity titles -->
+    <string name="createlobbytitle">Create game</string>
+    <string name="joinedlobbytitle">Lobby</string>
+    <string name="lobbytitle">Lobby</string>
+    <string name="profiletitle">Profile</string>
+    <string name="gameovertitle">Game finished</string>
+    <string name="joinlobbytitle">Join a lobby</string>
+
+
+
+
+    <string name="createlobbybutton">Create game</string>
+
+
+
+
+
 </resources>

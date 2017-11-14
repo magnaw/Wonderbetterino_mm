@@ -7,60 +7,73 @@
     <application
         android:name=".SingletonApplications"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <!-- android:theme="@style/AppTheme" -->
+
+
+        <activity android:name=".LoginActivity"
+            android:noHistory="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateLobby">
-            android:noHistory="true"
+
+        <activity android:name=".CreateLobby"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".JoinLobby">
-            android:noHistory="true"
+
+        <activity android:name=".JoinLobby"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".Profile">
-            android:noHistory="true"
+
+        <activity android:name=".Profile"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".Games.Galgeleg.Hangman">
-            android:noHistory="true"
+
+        <activity android:name=".Games.Galgeleg.Hangman"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".Lobby">
-            android:noHistory="true"
+
+        <activity android:name=".Lobby"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".JoinedLobby">
-            android:noHistory="true"
+
+        <activity android:name=".JoinedLobby"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".GameOverActivity">
-            android:noHistory="true"
+
+        <activity android:name=".GameOverActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

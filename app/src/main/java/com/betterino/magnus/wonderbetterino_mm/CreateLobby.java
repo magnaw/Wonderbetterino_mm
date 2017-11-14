@@ -30,7 +30,7 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
 
     private TextView betInfoText;
     private SeekBar betValue;
-    private TextView seekbarInfoText;
+    //private TextView seekbarInfoText;
     private TextView gameInfoText;
     private Spinner chosenGame;
     private Button createLobby;
@@ -49,6 +49,7 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.createlobbytitle);
         setContentView(R.layout.activity_create_lobby);
 
 
@@ -95,22 +96,23 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
 
 
         betInfoText = (TextView) findViewById(R.id.createLobby_textView);
-        betInfoText.setText("Set the coin bet:");
+        betInfoText.setText("Coin bet: "+bet);
 
 
-        seekbarInfoText = (TextView) findViewById(R.id.createLobby_textview3);
-        seekbarInfoText.setText("3");
+        //seekbarInfoText = (TextView) findViewById(R.id.createLobby_textview3);
+        //seekbarInfoText.setText(""+bet);
 
 
         betValue = (SeekBar) findViewById(R.id.createLobby_seekBar);
-        betValue.setProgress(bet);
+        betValue.setProgress(bet-2);
         betValue.incrementProgressBy(1);
         betValue.setMax(9);
         betValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                seekbarInfoText.setText(String.valueOf(progress+1));
+                //seekbarInfoText.setText(String.valueOf(progress+1));
+                betInfoText.setText("Coin bet: "+String.valueOf(progress+1));
                 bet = progress+1;
             }
             @Override
@@ -126,7 +128,7 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
 
 
         chosenGame = (Spinner) findViewById(R.id.createLobby_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, SingletonApplications.gameArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_text, SingletonApplications.gameArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         chosenGame.setAdapter(adapter);
         chosenGame.setOnItemSelectedListener(this);

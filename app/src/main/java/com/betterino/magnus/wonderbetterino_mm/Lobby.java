@@ -51,6 +51,7 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.lobbytitle);
         setContentView(R.layout.activity_lobby);
         weAreDoneHere = false;
 
@@ -90,10 +91,15 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
 
 
                     updateText(gameString, gameBet, nrOfPlayers);
-                    if(nrOfPlayers >= 2)
+                    if(nrOfPlayers >= 2) {
                         startGame.setEnabled(true);
-                    else
+                        startGame.setText("Start game");
+                    }
+                    else {
                         startGame.setEnabled(false);
+                        startGame.setText("Wait for more players");
+                    }
+
                 }
                 else if (dataSnapshot.getValue() == null) {
                     makeToast("Your lobby was removed.");

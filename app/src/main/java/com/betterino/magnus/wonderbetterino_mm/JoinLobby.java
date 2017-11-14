@@ -1,10 +1,7 @@
 package com.betterino.magnus.wonderbetterino_mm;
 
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class JoinLobby extends AppCompatActivity {
 
@@ -38,6 +36,7 @@ public class JoinLobby extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.joinlobbytitle);
         setContentView(R.layout.activity_join_lobby);
 
 
@@ -66,6 +65,17 @@ public class JoinLobby extends AppCompatActivity {
 
             }
         };
+
+
+
+
+        //Crasher umiddelbart ikke appen, så vi lader den være for nu.
+        //Slet lobby:
+        //try{
+            myRef.child("lobbys").child(userID).removeValue();
+        //} catch (Exception e) {
+
+        //}
 
 
 

@@ -8,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.betterino.magnus.wonderbetterino_mm.Games.Galgeleg.Hangman;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +43,7 @@ public class JoinedLobby extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.joinedlobbytitle);
         setContentView(R.layout.activity_joined_lobby);
         weAreDoneHere = false;
         lobby = (LobbyDTO) getIntent().getSerializableExtra("lobbyNr");

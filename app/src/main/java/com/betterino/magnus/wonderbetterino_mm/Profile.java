@@ -42,6 +42,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle(R.string.profiletitle);
         setContentView(R.layout.activity_profile);
 
         name = (TextView) findViewById(R.id.profile_name);

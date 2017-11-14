@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class JoinLobbyListAdapter extends BaseAdapter {
     private TextView bet;
     private String id;
     private Context context;
+    private ImageView img;
 
 
 
@@ -62,6 +64,7 @@ public class JoinLobbyListAdapter extends BaseAdapter {
 
         game = (TextView) rowView.findViewById(R.id.lobbyGameList);
         bet = (TextView) rowView.findViewById(R.id.LobbyBetList);
+        img = (ImageView) rowView.findViewById(R.id.LobbyImageList);
 
 
 
@@ -74,6 +77,14 @@ public class JoinLobbyListAdapter extends BaseAdapter {
         int lobbyBet = lobbyelement.getBet();
 
         bet.setText("Bet: "+lobbyBet);
+
+        switch(lobbyGame) {
+            case "Hangman":
+                img.setImageResource(R.drawable.galge_forkert6); break;
+            default:
+                img.setImageResource(R.mipmap.ic_launcher); break;
+
+        }
 
 
         //String lobbyID = lobbyelement.get;

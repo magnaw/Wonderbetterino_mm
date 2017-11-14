@@ -12,10 +12,12 @@ import android.text.Editable;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.design.widget.Snackbar;
 
@@ -35,9 +37,9 @@ import com.google.firebase.database.ValueEventListener;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button buttonLogin;
-    private Button registerButton;
     private EditText emailText;
     private EditText passwordText;
+    private TextView signUpText;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private AlertDialog popup;
@@ -48,7 +50,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppFullScreenTheme);
         setContentView(R.layout.activity_login);
+
 
 
 //        this.user = SingletonApplications.user;
@@ -81,8 +85,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         buttonLogin.setOnClickListener((View.OnClickListener) this);
 
-        registerButton = (Button) findViewById(R.id.registerButton);
-        registerButton.setOnClickListener((View.OnClickListener) this);
+        signUpText = (TextView) findViewById(R.id.signUpText);
+        signUpText.setOnClickListener((View.OnClickListener) this);
+
+        //registerButton = (Button) findViewById(R.id.registerButton);
+        //registerButton.setOnClickListener((View.OnClickListener) this);
 
 
         emailText = (EditText) findViewById(R.id.emailLogin);
@@ -128,7 +135,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }
 
-        else if (v == registerButton) {
+        else if (v == signUpText) {
             registerPopup("", "");
         }
     }
@@ -157,36 +164,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-//                SingletonApplications.user = authResult.getUser();
-
-                //Smider alle users ind i et array i singleton
-//                FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                DatabaseReference myRef = database.getReference();
-//
-//                myRef.child("users").addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-//                        for (DataSnapshot child : children) {
-//                            UserDTO value = child.getValue(UserDTO.class);
-//                            SingletonApplications.userArray.add(value);
-//                        }
-//
-//
-//                        for (UserDTO users : SingletonApplications.userArray) {
-//                            //Den data der passer med userid
-//                            makeToast(users.getName());
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
-//
-//                    }
-//                });
-
 
             }
         });
