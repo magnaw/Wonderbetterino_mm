@@ -205,7 +205,7 @@ public class GameOverActivity extends AppCompatActivity {
 
 
 
-        info.setText("You finished the game!\nWaiting for the rest of the players\nThis screen will automaticly disappear when all players have finished the game");
+        info.setText("You finished the game!\n\nPlease wait for the rest of the players to also finish.\n\nThis screen will automaticly disappear when all players have finished the game.");
 
 
 

@@ -9,12 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.betterino.magnus.wonderbetterino_mm.Games.Galgeleg.Hangman;
 import com.google.firebase.auth.FirebaseAuth;
@@ -47,7 +49,12 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppFullScreenTheme);
         setContentView(R.layout.activity_main_menu);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        myToolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
 
         //Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         //setSupportActionBar(myToolbar);
@@ -274,6 +281,28 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 //        SingletonApplications.userArray = new ArrayList<UserDTO>();
 //        makeToast("Signed out");
     }
+
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if(item.getItemId() == R.id.settings) {
+            makeToast("There is no settings for this app yet");
+        }
+        if(item.getItemId() == R.id.help) {
+            Intent i = new Intent(this, HelpActivity.class);
+            startActivity(i);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
 

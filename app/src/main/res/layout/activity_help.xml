@@ -5,25 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/backgroundblackdice"
-    tools:context="com.betterino.magnus.wonderbetterino_mm.GameOverActivity">
+    tools:context="com.betterino.magnus.wonderbetterino_mm.HelpActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true">
 
-        <TextView
-            android:id="@+id/Gameover_textview"
-            android:layout_marginTop="30dp"
+        <ExpandableListView
+            android:id="@+id/helpListView"
+            android:divider="#505050"
+            android:dividerHeight="1dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="Droid Sans"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp" />
+            android:layout_height="match_parent" />
     </LinearLayout>
-
 </android.support.constraint.ConstraintLayout>

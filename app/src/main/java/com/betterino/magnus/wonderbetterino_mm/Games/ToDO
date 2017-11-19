@@ -4,12 +4,10 @@
 
 
 //Mangler:
-Jeg tænker umiddelbart at bet fjernes fra ens konto når et spil startes, og så bliver der overført players*bet til vinderen.
-Der skal sorteres fra så man ikke kan se lobbyer dyrere end det antal coins man har.
 Slettes en lobby midt i et spil vil appen crashe for andre, den lytter i forvejen på om den forsvinder, så den skal bare gå til hovedmenu.
 
 //Ideer
-
+Se om du kan ændre pilen i listerne til hvid istedet for sort, umiddelbart skal der laves noget custom lister. (de er i help og joinlobby)
 
 //Ekstra
 Implementer flere spil.

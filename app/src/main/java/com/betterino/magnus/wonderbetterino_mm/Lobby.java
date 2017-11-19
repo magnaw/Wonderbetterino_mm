@@ -1,6 +1,7 @@
 package com.betterino.magnus.wonderbetterino_mm;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.betterino.magnus.wonderbetterino_mm.Games.Galgeleg.Hangman;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,6 +38,8 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
     private DatabaseReference myRef;
     private FirebaseUser user;
     private String userID;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     //Listeners
     private ValueEventListener valueEvList;
@@ -78,6 +82,28 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
         startGame = (Button) findViewById(R.id.lobby_startgame);
         startGame.setOnClickListener(this);
         startGame.setText("Start game");
+
+
+
+        //Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                SingletonApplications.user = firebaseAuth.getCurrentUser();
+                if (SingletonApplications.user != null) {
+                    // User is signed in
+                    Log.d("", "onAuthStateChanged:signed_in:" + SingletonApplications.user.getUid());
+
+                } else {
+                    // User is signed out
+                    Log.d("", "onAuthStateChanged:signed_out");
+                }
+                // ...
+            }
+        };
+
+
 
         valueEvList = new ValueEventListener() {
             @Override
@@ -128,6 +154,10 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
         weAreDoneHere = true;
 
         myRef.child("lobbys").child(lobby.getHost()).setValue(lobby);
+
+        //Remove bet from player'
+        UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet-lobby.getBet());
+        myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
 
 
         if (gameString.equals("Hangman")){

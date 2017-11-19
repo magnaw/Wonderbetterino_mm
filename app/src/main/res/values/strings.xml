@@ -7,7 +7,6 @@
     <string name="signIn">Sign in</string>
 
 
-
     <!-- Activity titles -->
     <string name="createlobbytitle">Create game</string>
     <string name="joinedlobbytitle">Lobby</string>
@@ -17,12 +16,15 @@
     <string name="joinlobbytitle">Join a lobby</string>
 
 
-
-
     <string name="createlobbybutton">Create game</string>
 
 
+    <string name="joinLobbyText">Click on a lobby to join it</string>
+    <string name="joinLobbyTextEmpty">Click on a lobby to join it\nIf you do not see any lobbys, they might have a higher bet than you can afford, or none are open</string>
 
+
+    <string name="toolbar_settings">Settings</string>
+    <string name="toolbar_help">Help</string>
 
 
 </resources>

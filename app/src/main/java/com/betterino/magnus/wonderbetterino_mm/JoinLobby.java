@@ -3,6 +3,7 @@ package com.betterino.magnus.wonderbetterino_mm;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ public class JoinLobby extends AppCompatActivity {
     private ListView list;
     private JoinLobbyListAdapter listAdapter;
     private ArrayList<LobbyDTO> gameList;
+    private TextView text;
 
     //Firebase
     private FirebaseDatabase database;
@@ -93,6 +95,10 @@ public class JoinLobby extends AppCompatActivity {
         list.setAdapter(listAdapter);
 
 
+        text = (TextView) findViewById(R.id.joinLobbyText);
+        text.setText(R.string.joinLobbyText);
+
+
 
 
 
@@ -106,11 +112,16 @@ public class JoinLobby extends AppCompatActivity {
         gameList.clear();
         for(DataSnapshot ds : dataSnapshot.getChildren()) {
             LobbyDTO lob = ds.getValue(LobbyDTO.class);
-            if (lob.getStarted() == 0)
+            if (lob.getStarted() == 0 && lob.getBet() <= SingletonApplications.wallet)
                 gameList.add(lob);
             listAdapter.notifyDataSetChanged();
 
-            //Skal sortere dem fra hvor started = 1, 2 eller 3 MANGLER
+        }
+        if(gameList.isEmpty()){
+            text.setText(R.string.joinLobbyTextEmpty);
+        }
+        else{
+            text.setText(R.string.joinLobbyText);
         }
     }
 
