@@ -6,6 +6,8 @@
 //Mangler:
 Slettes en lobby midt i et spil vil appen crashe for andre, den lytter i forvejen på om den forsvinder, så den skal bare gå til hovedmenu.
 
+Ryk 'log ud' knappen til settings tabben. (når du har lavet settings tabben...
+
 //Ideer
 Se om du kan ændre pilen i listerne til hvid istedet for sort, umiddelbart skal der laves noget custom lister. (de er i help og joinlobby)
 
