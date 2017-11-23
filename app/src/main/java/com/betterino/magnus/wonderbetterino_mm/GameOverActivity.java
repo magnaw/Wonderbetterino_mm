@@ -232,17 +232,44 @@ public class GameOverActivity extends AppCompatActivity {
 
 
     public void postResults() {
-        ArrayList<LobbyDTO.players> players = loadedLobby.getPlayers();
-        for (LobbyDTO.players p : players) {
-            if (p.getId() == userID) {
-                players.remove(p);
+
+
+//        myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
+
+        LobbyDTO.players p = new LobbyDTO.players(finished, userID, score);
+
+        ArrayList<LobbyDTO.players> players = lobby.getPlayers();
+        System.out.println("USER ID = "+userID);
+        for (int i = 0; i<players.size(); i++) {
+            System.out.println("FORLOOP PLAYER AT = "+players.get(i).getId());
+            if (players.get(i).getId().equals(userID) && players.get(i).getFinished() == 0) {
+                System.out.println("FORLOOP CHOSEN = "+players.get(i).getId());
+//                myRef.child("lobbys").child(lobby.getHost()).child("players").child(""+i).getRef().removeValue();
+                myRef.child("lobbys").child(lobby.getHost()).child("players").child(""+i).setValue(p);
             }
         }
-        LobbyDTO.players p = new LobbyDTO.players(finished, userID, score);
-        players.add(p);
-        LobbyDTO updateLobby = new LobbyDTO(loadedLobby.getBet(), loadedLobby.getGame(), 2, loadedLobby.players, lobby.getHost());
-        myRef.child("lobbys").child(hostID).setValue(updateLobby);
-        System.out.println("Lobby når vi poster: "+updateLobby);
+
+
+
+
+//        players.add(p);
+//        LobbyDTO addtoLobby = new LobbyDTO(lobby.getBet(), lobby.getGame(), lobby.getStarted(), players, lobby.getHost());
+//        myRef.child("lobbys").child(lobby.getHost()).setValue(addtoLobby);
+
+
+
+
+//        ArrayList<LobbyDTO.players> players = loadedLobby.getPlayers();
+//        for (LobbyDTO.players p : players) {
+//            if (p.getId() == userID) {
+//                players.remove(p);
+//            }
+//        }
+//        LobbyDTO.players p = new LobbyDTO.players(finished, userID, score);
+//        players.add(p);
+//        LobbyDTO updateLobby = new LobbyDTO(loadedLobby.getBet(), loadedLobby.getGame(), 2, loadedLobby.players, lobby.getHost());
+//        myRef.child("lobbys").child(hostID).setValue(updateLobby);
+//        System.out.println("Lobby når vi poster: "+addtoLobby);
 
 
 

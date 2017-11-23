@@ -182,7 +182,7 @@ public class JoinedLobby extends AppCompatActivity {
 
         //Slet lobby:
         for (int i = 0; i<lobby.getPlayers().size(); i++) {
-            if (lobby.getPlayers().get(i).getId() == userID) {
+            if (lobby.getPlayers().get(i).getId().equals(userID)) {
                 myRef.child("lobbys").child(lobby.getHost()).child("players").child(""+i).getRef().removeValue();
             }
         }
@@ -194,6 +194,10 @@ public class JoinedLobby extends AppCompatActivity {
 
 
     public void joinGameLobby() {
+
+
+
+
         ArrayList<LobbyDTO.players> players = lobby.getPlayers();
         LobbyDTO.players p = new LobbyDTO.players(0, userID, 0);
         players.add(p);
