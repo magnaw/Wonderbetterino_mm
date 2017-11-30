@@ -47,6 +47,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private DatabaseReference mDatabase;
 //    private FirebaseUser user;
 
+    private Button testuser1;
+    private Button testuser2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,15 +92,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         signUpText = (TextView) findViewById(R.id.signUpText);
         signUpText.setOnClickListener((View.OnClickListener) this);
 
-        //registerButton = (Button) findViewById(R.id.registerButton);
-        //registerButton.setOnClickListener((View.OnClickListener) this);
+
+        testuser1 = (Button) findViewById(R.id.testuser1);
+        testuser1.setOnClickListener((View.OnClickListener) this);
+
+        testuser2 = (Button) findViewById(R.id.testuser2);
+        testuser2.setOnClickListener((View.OnClickListener) this);
 
 
         emailText = (EditText) findViewById(R.id.emailLogin);
         passwordText = (EditText) findViewById(R.id.passwordLogin);
 
-        emailText.setText("test@mail.dk");
-        passwordText.setText("123456");
+        //emailText.setText("test@mail.dk");
+        //passwordText.setText("123456");
 
 
 
@@ -133,6 +141,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             else {
                 login(email, password);
             }
+        }
+
+        else if (v == testuser1) {
+            login("testuser1@mail.dk", "123456");
+        }
+
+        else if (v == testuser2) {
+            login("testuser2@mail.dk", "123456");
         }
 
         else if (v == signUpText) {

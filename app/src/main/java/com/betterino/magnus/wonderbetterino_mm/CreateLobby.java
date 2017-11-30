@@ -1,6 +1,7 @@
 package com.betterino.magnus.wonderbetterino_mm;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.warkiz.widget.IndicatorSeekBar;
+import com.warkiz.widget.IndicatorSeekBarType;
+import com.warkiz.widget.IndicatorType;
+import com.warkiz.widget.TickType;
 
 import java.util.ArrayList;
 
@@ -30,6 +35,7 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
 
     private TextView betInfoText;
     private SeekBar betValue;
+    private IndicatorSeekBar indicatorSeekBar;
     //private TextView seekbarInfoText;
     private TextView gameInfoText;
     private Spinner chosenGame;
@@ -99,27 +105,68 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
         betInfoText.setText("Coin bet: "+bet);
 
 
+        indicatorSeekBar = (IndicatorSeekBar) findViewById(R.id.createLobby_seekBar);
+        //indicatorSeekBar = new IndicatorSeekBar.Builder(this)
+        //        .setMax(10)
+        //        .setMin(1)
+        //        .setProgress(5)
+        //        .setSeekBarType(IndicatorSeekBarType.DISCRETE_TICKS)
+        //        .setTickType(TickType.OVAL)
+        //        .setTickColor(Color.parseColor("#0000FF"))
+        //        .setTickSize(8)//dp size
+        //        .setTickNum(1)
+        //        .setBackgroundTrackSize(2)//dp size
+        //        .setBackgroundTrackColor(Color.parseColor("#666666"))
+        //        .setProgressTrackSize(3)//dp size
+        //        .setProgressTrackColor(Color.parseColor("#0000FF"))
+        //        .showIndicator(true)
+        //        .setIndicatorType(IndicatorType.SQUARE_CORNERS)
+        //        .setIndicatorColor(Color.parseColor("#0000FF"))
+        //        .build();
+
+        indicatorSeekBar.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(IndicatorSeekBar seekBar, int progress, float progressFloat, boolean fromUserTouch) {
+                betInfoText.setText("Coin bet: "+String.valueOf(progress));
+                bet = progress;
+            }
+
+            @Override
+            public void onSectionChanged(IndicatorSeekBar seekBar, int thumbPosOnTick, String textBelowTick, boolean fromUserTouch) {
+                //only callback on discrete series SeekBar type.
+            }
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar, int thumbPosOnTick) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+
+            }
+        });
         //seekbarInfoText = (TextView) findViewById(R.id.createLobby_textview3);
         //seekbarInfoText.setText(""+bet);
 
 
-        betValue = (SeekBar) findViewById(R.id.createLobby_seekBar);
-        betValue.setProgress(bet-2);
-        betValue.incrementProgressBy(1);
-        betValue.setMax(9);
-        betValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        //betValue = (SeekBar) findViewById(R.id.createLobby_seekBar);
+        //betValue.setProgress(bet-2);
+        //betValue.incrementProgressBy(1);
+        //betValue.setMax(9);
+        //betValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
 
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                //seekbarInfoText.setText(String.valueOf(progress+1));
-                betInfoText.setText("Coin bet: "+String.valueOf(progress+1));
-                bet = progress+1;
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
+        //@Override
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//                //seekbarInfoText.setText(String.valueOf(progress+1));
+        //              betInfoText.setText("Coin bet: "+String.valueOf(progress+1));
+        //      bet = progress+1;
+        //  }
+        //  @Override
+        //  public void onStartTrackingTouch(SeekBar seekBar) {}
+        //  @Override
+        //  public void onStopTrackingTouch(SeekBar seekBar) {}
+        //});
 
 
 

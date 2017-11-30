@@ -40,7 +40,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     private FirebaseUser user;
     private String userID;
 
-    private Button logout;
+    //private Button logout;
 
 
 
@@ -70,8 +70,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         avatarButton.setOnClickListener((View.OnClickListener) this);
 
 
-        logout = (Button) findViewById(R.id.buttonLogout);
-        logout.setOnClickListener((View.OnClickListener) this);
+        //logout = (Button) findViewById(R.id.buttonLogout);
+        //logout.setOnClickListener((View.OnClickListener) this);
 
 
         this.user = SingletonApplications.user;
@@ -169,12 +169,12 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
 
         }
-        else if (v == logout) {
-            startActivity(new Intent(MainMenu.this, LoginActivity.class));
-            finish();
-            mAuth.signOut();
-            makeToast("Signed out");
-        }
+        //else if (v == logout) {
+        //    startActivity(new Intent(MainMenu.this, LoginActivity.class));
+        //    finish();
+        //    mAuth.signOut();
+        //    makeToast("Signed out");
+        //}
     }
 
     @Override
@@ -294,7 +294,8 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         if(item.getItemId() == R.id.settings) {
-            makeToast("There is no settings for this app yet");
+            Intent i = new Intent(this, SettingsActivity.class);
+            startActivity(i);
         }
         if(item.getItemId() == R.id.help) {
             Intent i = new Intent(this, HelpActivity.class);
