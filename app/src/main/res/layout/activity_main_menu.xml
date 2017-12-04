@@ -85,20 +85,22 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-<!--
-        <Button
-            android:id="@+id/buttonLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Log out (temp)"
-            android:layout_marginTop="20dp"
-            style="@android:style/Widget.Holo.Button"
-            android:fontFamily="Droid Sans"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-            -->
+
+
+        <!--
+                <Button
+                    android:id="@+id/buttonLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Log out (temp)"
+                    android:layout_marginTop="20dp"
+                    style="@android:style/Widget.Holo.Button"
+                    android:fontFamily="Droid Sans"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                    -->
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

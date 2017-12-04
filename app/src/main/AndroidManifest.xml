@@ -86,6 +86,9 @@
         -->
         <activity android:name=".HelpActivity" />
         <activity android:name=".SettingsActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4b4ce1be862fe5b19f1dbdb022a0bed40f684c69" />
     </application>
 
 </manifest>

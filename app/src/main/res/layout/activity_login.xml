@@ -88,6 +88,8 @@
             style="@android:style/Widget.Holo.Button"
             android:fontFamily="Droid Sans"
             android:text="@string/preUser2" />
+
+
 <!--
         <Button
             android:text="Registrer"

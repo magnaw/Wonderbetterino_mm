@@ -54,14 +54,14 @@ public class Galgelogik {
 
 
     public Galgelogik() {
-        muligeOrd.add("bil");
+        muligeOrd.add("car");
         muligeOrd.add("computer");
-        muligeOrd.add("programmering");
-        muligeOrd.add("motorvej");
-        muligeOrd.add("busrute");
-        muligeOrd.add("gangsti");
-        muligeOrd.add("skovsnegl");
-        muligeOrd.add("solsort");
+        muligeOrd.add("programming");
+        muligeOrd.add("highway");
+        muligeOrd.add("busroute");
+        muligeOrd.add("footpath");
+        muligeOrd.add("slug");
+        muligeOrd.add("blackbird");
         nulstil();
 
         }

@@ -2,8 +2,10 @@ package com.betterino.magnus.wonderbetterino_mm;
 
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.auth.FirebaseUser;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +23,7 @@ public class SingletonApplications extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
     }
 
 }

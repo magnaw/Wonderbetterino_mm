@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "405561362944-kujjfhe842e92iqr0b2ormvpo5d2ghk5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.betterino.magnus.wonderbetterino_mm",
+            "certificate_hash": "02b78f4ff4fbec45edd9847b6c4a89c62cc172a0"
+          }
+        },
+        {
           "client_id": "405561362944-toe3u9u2i5ogd7p9as7pl61m0628usef.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "405561362944-toe3u9u2i5ogd7p9as7pl61m0628usef.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
