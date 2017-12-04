@@ -28,6 +28,7 @@
     <string name="settingsString">Settings</string>
     <string name="preUser1">Login with test user 1</string>
     <string name="preUser2">Login with test user 2</string>
+    <string name="log_out">Log out</string>
 
 
 </resources>
