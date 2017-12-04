@@ -36,7 +36,7 @@
             android:id="@+id/buttonLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Log out (temp)"
+            android:text="Log out"
             android:layout_marginTop="20dp"
             style="@android:style/Widget.Holo.Button"
             android:fontFamily="Droid Sans"
