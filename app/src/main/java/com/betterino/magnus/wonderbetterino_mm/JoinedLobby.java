@@ -144,16 +144,6 @@ public class JoinedLobby extends AppCompatActivity {
 
 
 
-
-
-
-
-
-        //game.setText("Vi skal spille "+lobby.getGame()+"!\nVent venligst på at spillet begynder");
-        //bet.setText("I dette spil er bettet: "+lobby.getBet());
-
-
-
     }
 
     private void startGame() {

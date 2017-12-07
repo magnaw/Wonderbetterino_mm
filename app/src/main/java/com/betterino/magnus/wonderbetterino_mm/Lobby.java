@@ -167,11 +167,8 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
     }
 
     public void startGame() {
-        //lobby.setStarted(1);
         lobbyStarted1();
         weAreDoneHere = true;
-
-        //myRef.child("lobbys").child(lobby.getHost()).setValue(lobby);
 
         //Remove bet from player'
         UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet-lobby.getBet());

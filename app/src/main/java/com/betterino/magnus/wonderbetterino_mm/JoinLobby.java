@@ -68,27 +68,10 @@ public class JoinLobby extends AppCompatActivity {
             }
         };
 
-
-
-
-        //Crasher umiddelbart ikke appen, så vi lader den være for nu.
-        //Slet lobby:
-        //try{
-            myRef.child("lobbys").child(userID).removeValue();
-        //} catch (Exception e) {
-
-        //}
-
+        myRef.child("lobbys").child(userID).removeValue();
 
 
         myRef.child("lobbys").addValueEventListener(valueEvList);
-
-
-
-
-
-        //Skal hente en liste af LobbyDTO fra firebase, som en form for objekter der skal swipes/scrolles igennem, og sorteres på game, bet osv.
-        //Man skal ikke kunne se lobbys man ikke har nok coins til at være med i.
 
         list = (ListView) findViewById(R.id.join_list);
         listAdapter = new JoinLobbyListAdapter(this, gameList);

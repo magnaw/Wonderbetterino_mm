@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private AlertDialog popup;
     final Context context = this;
     private DatabaseReference mDatabase;
-//    private FirebaseUser user;
 
     private Button testuser1;
     private Button testuser2;
@@ -57,10 +56,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setTheme(R.style.AppFullScreenTheme);
         setContentView(R.layout.activity_login);
 
-
-
-//        this.user = SingletonApplications.user;
-        //Firebase
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -78,7 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         };
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        //Firebase DB
+
 
 
 
@@ -103,8 +98,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         emailText = (EditText) findViewById(R.id.emailLogin);
         passwordText = (EditText) findViewById(R.id.passwordLogin);
 
-        //emailText.setText("test@mail.dk");
-        //passwordText.setText("123456");
 
 
 
@@ -318,12 +311,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, option, Toast.LENGTH_SHORT).show();
     }
 
-//    public void onAuthSuccess(FirebaseUser user) {
-//        // Go to MainActivity
-//        startActivity(new Intent(LoginActivity.this, MainMenu.class));
-//        finish();
-//    }
-
     public void writeNewUser(String userId, String name) {
         UserDTO user = new UserDTO(name, 0);
         mDatabase.child("users").child(userId).setValue(user);
@@ -343,8 +330,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
         if (mAuth.getCurrentUser() != null) {
-//            onAuthSuccess(mAuth.getCurrentUser());
-            //There is a signed in user, so we just skip the login screen
             startActivity(new Intent(LoginActivity.this, MainMenu.class));
             finish();
         }

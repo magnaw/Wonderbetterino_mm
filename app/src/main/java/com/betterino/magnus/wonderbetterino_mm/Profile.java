@@ -34,8 +34,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private String userID;
 
-
-    //Listener
     private ValueEventListener valueEvList;
 
 
@@ -81,11 +79,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         };
 
 
-
-//        String key = child.getKey();
-//        makeToast("Din key er : ");
-
-
         valueEvList = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -107,21 +100,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         };
         myRef.child("users").child(userID).addValueEventListener(valueEvList);
 
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
 
 
 

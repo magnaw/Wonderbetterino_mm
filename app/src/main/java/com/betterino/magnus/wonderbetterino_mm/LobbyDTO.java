@@ -23,6 +23,7 @@ public class LobbyDTO implements Serializable{
     //1 = spil startet
     //2 = mellemværdi, skal sættes til dette når resultater postes
     //3 = spillet er slut
+    //4 = Midlertidig blokering, så der kun kan være 2 spillere i et spil
 
 
     public int getBet() { return bet; }

@@ -86,10 +86,6 @@ public class JoinLobbyListAdapter extends BaseAdapter {
 
         }
 
-
-        //String lobbyID = lobbyelement.get;
-        // Her skal den joine den lobby der passer til det ID vi har hentet lige henover denne linje
-
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

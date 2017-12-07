@@ -40,8 +40,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
     private FirebaseUser user;
     private String userID;
 
-    //private Button logout;
-
 
 
 
@@ -56,9 +54,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
         setSupportActionBar(myToolbar);
         myToolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
 
-        //Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        //setSupportActionBar(myToolbar);
-
 
         joinButton = (Button) findViewById(R.id.buttonJoin);
         joinButton.setOnClickListener((View.OnClickListener) this);
@@ -68,11 +63,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
         avatarButton = (Button) findViewById(R.id.buttonProfile);
         avatarButton.setOnClickListener((View.OnClickListener) this);
-
-
-        //logout = (Button) findViewById(R.id.buttonLogout);
-        //logout.setOnClickListener((View.OnClickListener) this);
-
 
         this.user = SingletonApplications.user;
         userID = user.getUid();
@@ -114,7 +104,6 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
                 } catch (NumberFormatException e) {
                     makeToast("Error loading wallet. Try again later.");
                 }
-//                makeToast("You have "+SingletonApplications.wallet+" coins in your wallet");
 
 
             }
@@ -128,37 +117,17 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     public void onClick(View v) {
         if(v == joinButton){
             Intent i = new Intent(this, JoinLobby.class);
             startActivity(i);
-            //Intent i = new Intent(this, Hangman.class);
-            //startActivity(i);
 
         }
         else if (v == createButton) {
             Intent i = new Intent(this, CreateLobby.class);
             startActivity(i);
-
-            //Add 1 coin to wallet.
-//            UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet+1);
-//            myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
-
 
 
 
@@ -169,19 +138,13 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
 
         }
-        //else if (v == logout) {
-        //    startActivity(new Intent(MainMenu.this, LoginActivity.class));
-        //    finish();
-        //    mAuth.signOut();
-        //    makeToast("Signed out");
-        //}
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-//        SingletonApplications.user = mAuth.getCurrentUser();
         mAuth.addAuthStateListener(mAuthListener);
         mAuth.getCurrentUser();
     }
@@ -248,7 +211,7 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                // Umiddelbart lukkes popup bare når der trykkes her, så jeg efterlader det as is
+
             }
         });
 
@@ -258,28 +221,13 @@ public class MainMenu extends AppCompatActivity implements View.OnClickListener{
 
 
 
-//    public void showData(DataSnapshot dataSnapshot) {
-//        for(DataSnapshot ds : dataSnapshot.getChildren()) {
-////            UserDTO uInfo = new UserDTO();
-//            SingletonApplications.userInfo.setName(ds.child(userID).getValue(UserDTO.class).getName());
-//            SingletonApplications.userInfo.setWallet(ds.child(userID).getValue(UserDTO.class).getWallet());
-//
-////            makeToast(ds.child(userID).getValue(UserDTO.class).getName());
-//
-//
-////            SingletonApplications.userInfo = uInfo;
-////            SingletonApplications.userArray.add(uInfo);
-//        }
-//    }
+
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        mAuth.signOut();
         finish();
-//        SingletonApplications.userArray = new ArrayList<UserDTO>();
-//        makeToast("Signed out");
     }
 
 

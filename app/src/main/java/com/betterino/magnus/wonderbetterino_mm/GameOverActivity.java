@@ -55,12 +55,6 @@ public class GameOverActivity extends AppCompatActivity {
 
 
         info = (TextView) findViewById(R.id.Gameover_textview);
-
-
-
-
-
-
         lobby = (LobbyDTO) getIntent().getSerializableExtra("lobby");
         userID = (String) getIntent().getStringExtra("userID");
         String a = (String) getIntent().getStringExtra("score");
@@ -121,15 +115,6 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-                //      SE MIG!!!
-                //Den crasher her på en nullpointerexeption når vi sletter lobbyen.
-                //Der mangler bare booleans der fortæller den om vi skal være i den her klasse eller ej.
-                //Evt se Lobby klassen for hvordan det er gjort der. (weAreDoneHere)
-
-                //Update
-                //Nu crasher den ikke her mere, men det er kun testet for host, mangler for spillere der har joinet.
-
                 if (!weAreDoneHere && dataSnapshot.getValue() != null) {
                     loadedLobby = dataSnapshot.getValue(LobbyDTO.class);
 
@@ -153,15 +138,6 @@ public class GameOverActivity extends AppCompatActivity {
                             int bet = lobby.getBet();
                             int winnings = (bet*nrOfPlayers)/2;
 
-                            //MANGLER:
-                            //Pt hvis vi har 2 vindere, så vil den sidste i arrayet få gevinsten, da vi tjekker >= over det her.
-                            //Det skal gerne ændres så vi evt. kører baglæns gennem arrayet, da jeg vurdere at ved et tie, skal den hurtigste vinde,
-                            //og den hurtigste vil lille bagerst i arrayet.
-
-
-
-                            //Users navn er null ifølge debuggeren.
-                            //Umiddelbart køres koden uden fejl, men der bliver ikke pushet noget, måske vi lige skal køre en auth i denne klasse?
                             UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet+winnings);
                             myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
                             gameFinished();
@@ -171,8 +147,6 @@ public class GameOverActivity extends AppCompatActivity {
                     }
 
                     if(loadedLobby.getStarted() == 3) {
-                        //Go to mainmenu and clear all previous intents (mangler)
-                        //openMainMenu();
                         finishGameAndGoHome();
                     }
                 }
@@ -196,23 +170,7 @@ public class GameOverActivity extends AppCompatActivity {
         myRef.child("lobbys").child(hostID).addValueEventListener(valueEvList);
 
 
-
-
-
-
-
-
-
-
-
         info.setText("You finished the game!\n\nPlease wait for the rest of the players to also finish.\n\nThis screen will automaticly disappear when all players have finished the game.");
-
-
-
-
-
-
-
 
 
 
@@ -233,9 +191,6 @@ public class GameOverActivity extends AppCompatActivity {
 
     public void postResults() {
 
-
-//        myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
-
         LobbyDTO.players p = new LobbyDTO.players(finished, userID, score);
 
         ArrayList<LobbyDTO.players> players = lobby.getPlayers();
@@ -244,35 +199,9 @@ public class GameOverActivity extends AppCompatActivity {
             System.out.println("FORLOOP PLAYER AT = "+players.get(i).getId());
             if (players.get(i).getId().equals(userID) && players.get(i).getFinished() == 0) {
                 System.out.println("FORLOOP CHOSEN = "+players.get(i).getId());
-//                myRef.child("lobbys").child(lobby.getHost()).child("players").child(""+i).getRef().removeValue();
                 myRef.child("lobbys").child(lobby.getHost()).child("players").child(""+i).setValue(p);
             }
         }
-
-
-
-
-//        players.add(p);
-//        LobbyDTO addtoLobby = new LobbyDTO(lobby.getBet(), lobby.getGame(), lobby.getStarted(), players, lobby.getHost());
-//        myRef.child("lobbys").child(lobby.getHost()).setValue(addtoLobby);
-
-
-
-
-//        ArrayList<LobbyDTO.players> players = loadedLobby.getPlayers();
-//        for (LobbyDTO.players p : players) {
-//            if (p.getId() == userID) {
-//                players.remove(p);
-//            }
-//        }
-//        LobbyDTO.players p = new LobbyDTO.players(finished, userID, score);
-//        players.add(p);
-//        LobbyDTO updateLobby = new LobbyDTO(loadedLobby.getBet(), loadedLobby.getGame(), 2, loadedLobby.players, lobby.getHost());
-//        myRef.child("lobbys").child(hostID).setValue(updateLobby);
-//        System.out.println("Lobby når vi poster: "+addtoLobby);
-
-
-
 
     }
 

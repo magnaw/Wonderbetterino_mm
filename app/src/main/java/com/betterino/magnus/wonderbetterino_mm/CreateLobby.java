@@ -106,23 +106,6 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
 
 
         indicatorSeekBar = (IndicatorSeekBar) findViewById(R.id.createLobby_seekBar);
-        //indicatorSeekBar = new IndicatorSeekBar.Builder(this)
-        //        .setMax(10)
-        //        .setMin(1)
-        //        .setProgress(5)
-        //        .setSeekBarType(IndicatorSeekBarType.DISCRETE_TICKS)
-        //        .setTickType(TickType.OVAL)
-        //        .setTickColor(Color.parseColor("#0000FF"))
-        //        .setTickSize(8)//dp size
-        //        .setTickNum(1)
-        //        .setBackgroundTrackSize(2)//dp size
-        //        .setBackgroundTrackColor(Color.parseColor("#666666"))
-        //        .setProgressTrackSize(3)//dp size
-        //        .setProgressTrackColor(Color.parseColor("#0000FF"))
-        //        .showIndicator(true)
-        //        .setIndicatorType(IndicatorType.SQUARE_CORNERS)
-        //        .setIndicatorColor(Color.parseColor("#0000FF"))
-        //        .build();
 
         indicatorSeekBar.setOnSeekChangeListener(new IndicatorSeekBar.OnSeekBarChangeListener() {
 
@@ -146,29 +129,6 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
 
             }
         });
-        //seekbarInfoText = (TextView) findViewById(R.id.createLobby_textview3);
-        //seekbarInfoText.setText(""+bet);
-
-
-        //betValue = (SeekBar) findViewById(R.id.createLobby_seekBar);
-        //betValue.setProgress(bet-2);
-        //betValue.incrementProgressBy(1);
-        //betValue.setMax(9);
-        //betValue.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-
-        //@Override
-//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                //seekbarInfoText.setText(String.valueOf(progress+1));
-        //              betInfoText.setText("Coin bet: "+String.valueOf(progress+1));
-        //      bet = progress+1;
-        //  }
-        //  @Override
-        //  public void onStartTrackingTouch(SeekBar seekBar) {}
-        //  @Override
-        //  public void onStopTrackingTouch(SeekBar seekBar) {}
-        //});
-
-
 
         gameInfoText = (TextView) findViewById(R.id.createLobby_textView2);
         gameInfoText.setText("Chose game:");
@@ -232,31 +192,6 @@ public class CreateLobby extends AppCompatActivity implements View.OnClickListen
         myRef.child("lobbys").child(userID).setValue(lobby);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
