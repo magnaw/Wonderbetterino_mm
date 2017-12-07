@@ -128,6 +128,9 @@ public class JoinedLobby extends AppCompatActivity {
                 else if (dataSnapshot.getValue() == null) {
                     finish();
                     makeToast("Your lobby was removed.");
+                    if (weAreDoneHere)
+                        goToMainMenu();
+
 
                 }
             }
@@ -144,6 +147,11 @@ public class JoinedLobby extends AppCompatActivity {
 
 
 
+    }
+
+    public void goToMainMenu() {
+        Intent i = new Intent(this, MainMenu.class);
+        startActivity(i);
     }
 
     private void startGame() {

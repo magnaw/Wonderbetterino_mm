@@ -141,7 +141,11 @@ public class GameOverActivity extends AppCompatActivity {
                             UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet+winnings);
                             myRef.child("users").child(mAuth.getCurrentUser().getUid()).setValue(user);
                             gameFinished();
+                            makeToast("You won! Congratulations!");
 
+                        }
+                        else {
+                            makeToast("You lost, try again!");
                         }
 
                     }
