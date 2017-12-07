@@ -118,10 +118,12 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
 
                     updateText(gameString, gameBet, nrOfPlayers);
                     if(nrOfPlayers >= 2) {
+                        lobbyStarted4();
                         startGame.setEnabled(true);
                         startGame.setText("Start game");
                     }
                     else {
+                        lobbyStarted0();
                         startGame.setEnabled(false);
                         startGame.setText("Wait for more players");
                     }
@@ -149,11 +151,27 @@ public class Lobby extends AppCompatActivity implements View.OnClickListener{
 
     }
 
-    public void startGame() {
+    public void lobbyStarted4() {
+        lobby.setStarted(4);
+        myRef.child("lobbys").child(lobby.getHost()).setValue(lobby);
+    }
+
+    public void lobbyStarted1() {
         lobby.setStarted(1);
+        myRef.child("lobbys").child(lobby.getHost()).setValue(lobby);
+    }
+
+    public void lobbyStarted0() {
+        lobby.setStarted(0);
+        myRef.child("lobbys").child(lobby.getHost()).setValue(lobby);
+    }
+
+    public void startGame() {
+        //lobby.setStarted(1);
+        lobbyStarted1();
         weAreDoneHere = true;
 
-        myRef.child("lobbys").child(lobby.getHost()).setValue(lobby);
+        //myRef.child("lobbys").child(lobby.getHost()).setValue(lobby);
 
         //Remove bet from player'
         UserDTO user = new UserDTO(SingletonApplications.name, SingletonApplications.wallet-lobby.getBet());
