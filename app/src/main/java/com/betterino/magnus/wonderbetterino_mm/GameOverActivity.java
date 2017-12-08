@@ -96,8 +96,17 @@ public class GameOverActivity extends AppCompatActivity {
         myRef.child("lobbys").child(hostID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                loadedLobby = dataSnapshot.getValue(LobbyDTO.class);
-                postResults();
+                if (dataSnapshot.getValue() == null) {
+                    finish();
+                    makeToast("Your lobby was removed.");
+                    openMainMenu();
+
+
+                }
+                else {
+                    loadedLobby = dataSnapshot.getValue(LobbyDTO.class);
+                    postResults();
+                }
 
 
             }
