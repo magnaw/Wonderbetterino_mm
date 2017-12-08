@@ -114,8 +114,19 @@ public class GameOverActivity extends AppCompatActivity {
         valueEvList = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                    finish();
+                    makeToast("Your lobby was removed.");
+                    openMainMenu();
 
-                if (!weAreDoneHere && dataSnapshot.getValue() != null) {
+
+                }
+
+
+                else if (!weAreDoneHere && dataSnapshot.getValue() != null) {
+
+                    try {
+
                     loadedLobby = dataSnapshot.getValue(LobbyDTO.class);
 
                     int i = 0;
@@ -153,6 +164,15 @@ public class GameOverActivity extends AppCompatActivity {
                     if(loadedLobby.getStarted() == 3) {
                         finishGameAndGoHome();
                     }
+
+                    }
+                    catch (NullPointerException e) {
+                        finish();
+                        makeToast("Your lobby was removed.");
+                        openMainMenu();
+                    }
+
+
                 }
                 else if (dataSnapshot.getValue() == null) {
                     finish();
@@ -179,6 +199,9 @@ public class GameOverActivity extends AppCompatActivity {
 
 
     }
+
+
+
     public void openMainMenu() {
         Intent i = new Intent(this, MainMenu.class);
         startActivity(i);

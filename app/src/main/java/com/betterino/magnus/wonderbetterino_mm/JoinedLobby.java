@@ -128,8 +128,8 @@ public class JoinedLobby extends AppCompatActivity {
                 else if (dataSnapshot.getValue() == null) {
                     finish();
                     makeToast("Your lobby was removed.");
-                    if (weAreDoneHere)
-                        goToMainMenu();
+                    //if (weAreDoneHere)
+                    //    goToMainMenu();
 
 
                 }
